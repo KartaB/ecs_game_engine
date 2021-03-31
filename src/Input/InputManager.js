@@ -6,6 +6,12 @@ document.onkeypress = function(event) {
     pressedKeys[keyLower] = true
 }
 
+document.onkeyup = function(event)
+{
+    let key = event.key.toLowerCase()
+    pressedKeys[key] = false
+}
+
 function GetKey(key) {
     let keyLower = key.toLowerCase()
     return pressedKeys[keyLower]
@@ -33,8 +39,6 @@ function GetRightClick() {
 
 /* Reset input */
 function ResetInput() {
-    pressedKeys = []
-
     leftButtonClicked = false
     rightButtonClicked = false
 }

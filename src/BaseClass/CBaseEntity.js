@@ -14,6 +14,7 @@ class Entity
     }
 
     AddComponent(_component) {
+        _component.owner = this
         this.components[_component.name] = _component
     }
 
@@ -26,6 +27,7 @@ class Entity
     }
 
     Remove() {
+        this.components = []
         delete Entity.List[this.id]
     }
 }
