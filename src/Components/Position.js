@@ -4,9 +4,7 @@ import Vector2 from "./../Structs/Vector2.js"
 class Position extends Component
 {
     constructor() {
-        super()
-
-        this.name = "Position"
+        super("Position")
 
         this.Position = new Vector2()
     }

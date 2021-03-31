@@ -1,3 +1,5 @@
+import Position from "./../Components/Position.js"
+
 class Entity
 {
     static List = []
@@ -5,6 +7,8 @@ class Entity
     constructor() {
         this.id = (+new Date()).toString(16) + (Math.random() * 100000000 | 0).toString(16)
         this.components = []
+
+        this.AddComponent(new Position())
 
         Entity.List[this.id] = this
     }
@@ -15,6 +19,10 @@ class Entity
 
     RemoveComponent(_componentName) {
         delete this.components[_componentName]
+    }
+
+    GetComponent(_componentName) {
+        return this.components[_componentName]
     }
 
     Remove() {
