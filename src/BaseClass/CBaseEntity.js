@@ -1,4 +1,4 @@
-import Position from "./../Components/Position.js"
+import Transform from "./../Components/Transform.js"
 
 class Entity
 {
@@ -8,7 +8,7 @@ class Entity
         this.id = (+new Date()).toString(16) + (Math.random() * 100000000 | 0).toString(16)
         this.components = []
 
-        this.AddComponent(new Position())
+        this.AddComponent(new Transform())
 
         Entity.List[this.id] = this
     }

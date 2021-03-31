@@ -7,8 +7,8 @@ class Player extends Entity
     constructor() {
         super()
 
-        this.AddComponent(new RenderPlayer())
         this.AddComponent(new InputPlayer())
+        this.AddComponent(new RenderPlayer())
     }
 }
 

@@ -8,7 +8,7 @@ class InputPlayer extends Component
     constructor() {
         super("InputPlayer")
 
-        this.Velocity = 5
+        this.Velocity = 3
     }
 
     Update() {
@@ -19,7 +19,7 @@ class InputPlayer extends Component
         if ( Input.GetKey("a") ) moveOffset.x -= (1 * this.Velocity)
         if ( Input.GetKey("d") ) moveOffset.x += (1 * this.Velocity)
 
-        this.owner.GetComponent("Position").Position.Add(moveOffset)
+        this.owner.GetComponent("Transform").Position.Add(moveOffset)
     }
 }
 

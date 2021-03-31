@@ -8,8 +8,8 @@ class RenderPlayer extends Component
     }
 
     Update() {
-        let plyPos = this.owner.GetComponent("Position").Position
-        Render.DrawCircle(plyPos, 30, "black")
+        let plyPos = this.owner.GetComponent("Transform").Position
+        Render.DrawCircle(plyPos, 30, "gray")
     }
 }
 
