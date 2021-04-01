@@ -1,3 +1,5 @@
+import Vector2 from "./../Structs/Vector2.js"
+
 /* Keyboard buttons */
 let pressedKeys = []
 
@@ -37,6 +39,17 @@ function GetRightClick() {
     return rightButtonClicked
 }
 
+/* Cursor position */
+let mouseX = 0, mouseY = 0
+document.onmousemove = function(event) {
+    mouseX = event.clientX
+    mouseY = event.clientY
+}
+
+function GetCursorPosition() {
+    return new Vector2(mouseX, mouseY)
+}
+
 /* Reset input */
 function ResetInput() {
     leftButtonClicked = false
@@ -47,5 +60,6 @@ export default {
     GetKey,
     GetLeftClick,
     GetRightClick,
+    GetCursorPosition,
     ResetInput
 }

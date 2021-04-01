@@ -1,4 +1,5 @@
 import { Main, Update } from "./main.js"
+import { UpdateCurTime } from "./Utility/CurTime.js"
 
 import Entity from "./BaseClass/CBaseEntity.js"
 import Input from "./Input/InputManager.js"
@@ -6,6 +7,7 @@ import Render from "./RenderSystem/Render.js"
 
 function GameLoop()
 {
+    UpdateCurTime()
     Render.AdjustScreen()
     
     Update()

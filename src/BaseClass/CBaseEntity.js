@@ -1,11 +1,12 @@
 import Transform from "./../Components/Transform.js"
+import Utils from "./../Utility/Utils.js"
 
 class Entity
 {
     static List = []
 
     constructor() {
-        this.id = (+new Date()).toString(16) + (Math.random() * 100000000 | 0).toString(16)
+        this.id = Utils.RandomID()
         this.components = []
 
         this.AddComponent(new Transform())
@@ -27,7 +28,10 @@ class Entity
     }
 
     Remove() {
-        this.components = []
+        for (let compName in this.components) {
+            delete this.components[compName]
+        }
+
         delete Entity.List[this.id]
     }
 }

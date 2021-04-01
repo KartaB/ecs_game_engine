@@ -7,6 +7,10 @@ class Component
         this.Start()
     }
 
+    Remove() {
+        delete this.owner.components[this.name]
+    }
+
     Start() {}
     Update() {}
 }

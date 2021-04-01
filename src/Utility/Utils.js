@@ -1,0 +1,55 @@
+import Vector2 from "./../Structs/Vector2.js"
+
+function RandomInt(min, max)
+{
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+function RandomVector(_vec1, _vec2)
+{
+    let randX = RandomInt(_vec1.x, _vec2.x)
+    let randY = RandomInt(_vec1.y, _vec2.y)
+
+    return new Vector2(randX, randY)
+}
+
+function RandomVectorInCircle(_start, _radius)
+{
+    let angle = Math.random() * Math.PI * 2;
+    let x = Math.cos(angle) * _radius;
+    let y = Math.sin(angle) * _radius;
+
+    return new Vector2(_start.x + x, _start.y + y)
+}
+
+function RandomColor()
+{
+    let r = RandomInt(0, 255)
+    let g = RandomInt(0, 255)
+    let b = RandomInt(0, 255)
+
+    return `rgb(${r},${g},${b})`;
+}
+
+function RandomID()
+{
+    return (+new Date()).toString(16) + (Math.random() * 100000000 | 0).toString(16)
+}
+
+function Distance(_point1, _point2)
+{
+    let a = _point1.x - _point2.x;
+    let b = _point1.y - _point2.y;
+
+    return Math.sqrt( a*a + b*b );
+}
+
+export default {
+    RandomInt,
+    RandomVector,
+    RandomVectorInCircle,
+    RandomColor,
+    RandomID,
+    
+    Distance
+}

@@ -11,6 +11,14 @@ class Ents
         }
         return foundEnts
     }
+
+    static FindByID(_id) {
+        return Entity.List[_id]
+    }
+
+    static GetAll() {
+        return Entity.List
+    }
 }
 
 export default Ents
