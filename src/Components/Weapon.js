@@ -2,14 +2,16 @@ import Component from "./../BaseClass/CBaseComponent.js"
 import Bullet from "./../Entities/Bullet.js"
 import { CurTime } from "./../Utility/CurTime.js"
 
+import Utils from "./../Utility/Utils.js"
+
 class Weapon extends Component
 {
     constructor() {
-        super("Weapon")
+        super()
 
         this.CanShoot = true
         this.NextFire = 0
-        this.FireDelay = 1.25
+        this.FireDelay = Utils.RandomInt(1000, 1750) / 1000
     }
 
     Shoot(_dir) {

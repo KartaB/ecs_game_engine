@@ -4,14 +4,27 @@ import Utils from "./../Utility/Utils.js"
 class Entity
 {
     static List = []
+    static Count = 0
+
+    static ClassList = {}
 
     constructor() {
         this.id = Utils.RandomID()
+        this.index = Entity.Count++
         this.components = []
 
         this.AddComponent(new Transform())
 
         Entity.List[this.id] = this
+
+        if (Entity.ClassList[this.GetClass()] == null) {
+            Entity.ClassList[this.GetClass()] = []
+        }
+        Entity.ClassList[this.GetClass()][this.index] = this.id
+    }
+
+    GetClass() {
+        return this.constructor.name
     }
 
     AddComponent(_component) {
@@ -31,6 +44,8 @@ class Entity
         for (let compName in this.components) {
             delete this.components[compName]
         }
+        
+        delete Entity.ClassList[this.GetClass()][this.index]
 
         delete Entity.List[this.id]
     }

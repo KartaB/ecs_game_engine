@@ -4,10 +4,8 @@ class Ents
 {
     static FindByClass(_class) {
         let foundEnts = []
-        for (let entID in Entity.List) {
-            if (Entity.List[entID].constructor.name === _class) {
-                foundEnts.push(Entity.List[entID])
-            }
+        for (let entID in Entity.ClassList[_class]) {
+            foundEnts.push(Entity.ClassList[_class][entID])
         }
         return foundEnts
     }

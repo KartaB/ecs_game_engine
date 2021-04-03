@@ -4,7 +4,7 @@ import Vector2 from "./../Structs/Vector2.js"
 class Transform extends Component
 {
     constructor() {
-        super("Transform")
+        super()
 
         this.Position = new Vector2()
     }

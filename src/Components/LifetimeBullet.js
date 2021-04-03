@@ -4,7 +4,7 @@ import { CurTime } from "./../Utility/CurTime.js"
 class LifetimeBullet extends Component
 {
     constructor() {
-        super("LifetimeBullet")
+        super()
 
         this.Lifetime = CurTime() + 5
     }

@@ -1,25 +1,36 @@
 import { Main, Update } from "./main.js"
-import { UpdateCurTime } from "./Utility/CurTime.js"
+import { UpdateCurTime, DeltaTime } from "./Utility/CurTime.js"
 
 import Entity from "./BaseClass/CBaseEntity.js"
+import Particle from "./BaseClass/CBaseParticle.js"
 import Input from "./Input/InputManager.js"
 import Render from "./RenderSystem/Render.js"
 
 function GameLoop()
 {
+    let deltaTime = DeltaTime()
+
     UpdateCurTime()
     Render.AdjustScreen()
     
-    Update()
+    Update(deltaTime)
 
-    for (let entID in Entity.List) {
-        for (let component in Entity.List[entID].components) {
-            Entity.List[entID].GetComponent(component).Update()
+    let entList = Entity.List
+    for (let entID in entList) {
+        let entComponents = entList[entID].components
+        for (let component in entComponents) {
+            entList[entID].GetComponent(component).ComponentHandler(deltaTime)
         }
     }
 
+    for (let particleID in Particle.List) {
+        Particle.List[particleID].ParticleUpdate(deltaTime)
+    }
+
     Input.ResetInput()
+
+    window.requestAnimationFrame(GameLoop)
 }
 
 Main()
-setInterval(GameLoop, 1000/60)
+window.requestAnimationFrame(GameLoop)

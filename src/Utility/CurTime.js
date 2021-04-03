@@ -11,3 +11,14 @@ export function CurTime()
 {
     return curTime
 }
+
+var lastUpdate = Date.now();
+
+export function DeltaTime()
+{
+    let now = Date.now();
+    let deltaTime = (now - lastUpdate) / 1000;
+    lastUpdate = now;
+
+    return deltaTime
+}

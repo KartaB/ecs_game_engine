@@ -3,7 +3,7 @@ import Component from "./../BaseClass/CBaseComponent.js"
 class Health extends Component
 {
     constructor() {
-        super("Health")
+        super()
 
         this.Health = 3
     }

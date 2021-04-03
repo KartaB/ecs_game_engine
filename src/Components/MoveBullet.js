@@ -1,39 +1,22 @@
 import Component from "./../BaseClass/CBaseComponent.js"
-import Ents from "./../BaseClass/CBaseStaticEntity.js"
-import Utils from "./../Utility/Utils.js"
 
 import Vector2 from "./../Structs/Vector2.js"
 
 class MoveBullet extends Component
 {
     constructor() {
-        super("MoveBullet")
+        super()
 
-        this.Speed = 5
+        this.Speed = 300
         this.Direction = null
     }
 
-    Update() {
+    Update(deltaTime) {
         let moveOffset = new Vector2(this.Direction.x, this.Direction.y)
-        moveOffset.Mul(this.Speed)
+        moveOffset.Mul(this.Speed * deltaTime)
         
         let ourPos = this.owner.GetComponent("Transform").Position
         ourPos.Add(moveOffset)
-
-        for (let unit of Ents.FindByClass("Unit")) { 
-            if (this.owner.ownerID == unit.id) continue;
-            if (this.owner.ignoredSquadID == unit.GetComponent("SquadUnit").SquadID) continue;
-
-            let bulletPos = this.owner.GetComponent("Transform").Position   
-            let unitPos = unit.GetComponent("Transform").Position  
-            let unitScale = unit.GetComponent("RenderUnit").Scale  
-
-            if (Utils.Distance(bulletPos, unitPos) <= unitScale) {
-                this.owner.Remove()
-                unit.GetComponent("Health").Change(-1)
-                return
-            }
-        }
     }
     
 }

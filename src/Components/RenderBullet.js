@@ -6,7 +6,7 @@ import Render from "./../RenderSystem/Render.js"
 class RenderBullet extends Component
 {
     constructor() {
-        super("RenderBullet")
+        super()
     }
 
     Update() {
