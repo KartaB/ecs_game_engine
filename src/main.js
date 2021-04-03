@@ -5,6 +5,7 @@ import Ents from "./BaseClass/CBaseStaticEntity.js"
 import Utils from "./Utility/Utils.js"
 
 import Unit from "./Entities/Unit.js"
+import CursorEffect from "./Particles/CursorEffect.js"
 
 let selectedSquadID = null
 export function Main()
@@ -16,7 +17,7 @@ export function Update(deltaTime)
 {
     Render.DrawRect(new Vector2(0, 0), Render.GetScreenSize(), "#2e2e2e", true)
 
-    if (Input.GetLeftClick()) {
+    if (Input.GetLeftClick() && !Input.GetKey("w")) {
         SquadSelectHandler()
     }
 
@@ -28,15 +29,20 @@ export function Update(deltaTime)
         CreateSquad(5, Input.GetCursorPosition())
     }
 
+    DrawSpawnTooltip()
+    DrawControlsTooltip()
     DrawSquadInfo()
 }
 
 function SquadMoveHandler() {
     if (selectedSquadID == null) return;
+    let cursorPos = Input.GetCursorPosition()
+
+    new CursorEffect(2, cursorPos, 1)
 
     let units = GetSquadUnits(selectedSquadID)
     for (let unit of units) {
-        let randPos = Utils.RandomVectorInCircle(Input.GetCursorPosition(), 50)
+        let randPos = Utils.RandomVectorInCircle(cursorPos, 75)
         unit.GetComponent("MoveUnit").Destination = randPos
     }
 }
@@ -101,7 +107,7 @@ function CreateSquad(_size, _pos) {
 }
 
 function DrawSquadInfo() {
-    let height = 50
+    let height = 80
     Render.DrawText(`Squad ID: ${selectedSquadID}`, new Vector2(50, height), "lightgray", 20, "left")
 
     let units = Ents.FindByClass("Unit")
@@ -112,4 +118,50 @@ function DrawSquadInfo() {
             Render.DrawText(`Unit[${unit.index}]: ${unit.id}`, new Vector2(50,height+=25), "lightgray", 20, "left")
         }
     }
+}
+
+function DrawSpawnTooltip() {
+    let wColor = "lightgray"
+    let wSize = 20
+
+    let lClickColor = "lightgray"
+    let lClickSize = 20
+
+    if (Input.GetKey("w")) {
+        wColor = "gold"
+        wSize = 22
+
+        if (Input.GetLeftClick()) {
+            lClickColor = "gold"
+            lClickSize = 21
+        }
+    }
+
+    let height = 50
+    Render.DrawText("W", new Vector2(50, height), wColor, wSize, "left")
+    Render.DrawText("+", new Vector2(75, height), "lightgray", 20, "left")
+    Render.DrawText("Left Click", new Vector2(95, height), lClickColor, lClickSize, "left")
+    Render.DrawText("| Create new squad", new Vector2(185, height), "gray", 20, "left")
+}
+
+function DrawControlsTooltip() {
+    let height = 50
+    let lClickColor = "lightgray"
+    let rClickColor = "lightgray"
+
+    if (Input.GetLeftClick() && !Input.GetKey("w")) {
+        lClickColor = "gold"
+    }
+    
+    if (Input.GetRightClick()) {
+        rClickColor = "gold"
+    }
+
+    let lClickStart = 425
+    Render.DrawText("Left Click", new Vector2(lClickStart, height), lClickColor, 20, "left")
+    Render.DrawText("| Select squad", new Vector2(lClickStart + 90, height), "gray", 20, "left")
+    
+    let rClickStart = 700
+    Render.DrawText("Right Click", new Vector2(rClickStart, height), rClickColor, 20, "left")
+    Render.DrawText("| Move selected squad", new Vector2(rClickStart + 105, height), "gray", 20, "left")
 }

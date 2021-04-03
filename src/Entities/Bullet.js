@@ -1,9 +1,9 @@
 import Entity from "./../BaseClass/CBaseEntity.js"
 
-import MoveBullet from "./../Components/MoveBullet.js"
-import CollisionBullet from "./../Components/CollisionBullet.js"
-import RenderBullet from "./../Components/RenderBullet.js"
-import LifetimeBullet from "./../Components/LifetimeBullet.js"
+import MoveBullet from "./../Components/BulletComponents/MoveBullet.js"
+import CollisionBullet from "./../Components/BulletComponents/CollisionBullet.js"
+import RenderBullet from "./../Components/BulletComponents/RenderBullet.js"
+import LifetimeBullet from "./../Components/BulletComponents/LifetimeBullet.js"
 
 import Vector2 from "../Structs/Vector2.js"
 

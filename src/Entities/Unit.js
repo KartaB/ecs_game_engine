@@ -1,11 +1,11 @@
 import Entity from "./../BaseClass/CBaseEntity.js"
 
 import Health from "./../Components/Health.js"
-import MoveUnit from "./../Components/MoveUnit.js"
-import SquadUnit from "./../Components/SquadUnit.js"
-import Weapon from "../Components/Weapon.js"
-import ActionHandlerUnit from "../Components/ActionHandlerUnit.js"
-import RenderUnit from "./../Components/RenderUnit.js"
+import MoveUnit from "./../Components/UnitComponents/MoveUnit.js"
+import SquadUnit from "./../Components/UnitComponents/SquadUnit.js"
+import Weapon from "../Components/UnitComponents/Weapon.js"
+import ActionHandlerUnit from "../Components/UnitComponents/ActionHandlerUnit.js"
+import RenderUnit from "./../Components/UnitComponents/RenderUnit.js"
 
 class Unit extends Entity
 {

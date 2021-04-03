@@ -1,4 +1,4 @@
-import Component from "./../BaseClass/CBaseComponent.js"
+import Component from "./../../BaseClass/CBaseComponent.js"
 
 class SquadUnit extends Component
 {

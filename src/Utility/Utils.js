@@ -5,6 +5,11 @@ function RandomInt(min, max)
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
+function RandomFloat(min, max)
+{
+    return (Math.random() * (min - max) + max).toFixed(4)
+}
+
 function RandomVector(_vec1, _vec2)
 {
     let randX = RandomInt(_vec1.x, _vec2.x)
@@ -16,8 +21,8 @@ function RandomVector(_vec1, _vec2)
 function RandomVectorInCircle(_start, _radius)
 {
     let angle = Math.random() * Math.PI * 2;
-    let x = Math.cos(angle) * _radius;
-    let y = Math.sin(angle) * _radius;
+    let x = Math.cos(angle) * RandomFloat(1, _radius);
+    let y = Math.sin(angle) * RandomFloat(1, _radius);
 
     return new Vector2(_start.x + x, _start.y + y)
 }
@@ -46,6 +51,7 @@ function Distance(_point1, _point2)
 
 export default {
     RandomInt,
+    RandomFloat,
     RandomVector,
     RandomVectorInCircle,
     RandomColor,

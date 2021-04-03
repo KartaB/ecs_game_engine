@@ -1,8 +1,8 @@
-import Component from "./../BaseClass/CBaseComponent.js"
-import Ents from "./../BaseClass/CBaseStaticEntity.js"
-import Utils from "./../Utility/Utils.js"
+import Component from "./../../BaseClass/CBaseComponent.js"
+import Ents from "./../../BaseClass/CBaseStaticEntity.js"
+import Utils from "./../../Utility/Utils.js"
 
-import { CurTime } from "./../Utility/CurTime.js"
+import { CurTime } from "./../../Utility/CurTime.js"
 
 class CollisionBullet extends Component
 {

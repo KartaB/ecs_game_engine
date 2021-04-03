@@ -1,8 +1,8 @@
-import Component from "./../BaseClass/CBaseComponent.js"
-import Ents from "./../BaseClass/CBaseStaticEntity.js"
+import Component from "../../BaseClass/CBaseComponent.js"
+import Ents from "../../BaseClass/CBaseStaticEntity.js"
 
-import Utils from "./../Utility/Utils.js"
-import { CurTime } from "./../Utility/CurTime.js"
+import Utils from "../../Utility/Utils.js"
+import { CurTime } from "../../Utility/CurTime.js"
 
 class ActionHandlerUnit extends Component
 {

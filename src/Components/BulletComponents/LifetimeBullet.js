@@ -1,5 +1,5 @@
-import Component from "./../BaseClass/CBaseComponent.js"
-import { CurTime } from "./../Utility/CurTime.js"
+import Component from "./../../BaseClass/CBaseComponent.js"
+import { CurTime } from "./../../Utility/CurTime.js"
 
 class LifetimeBullet extends Component
 {

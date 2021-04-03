@@ -4,14 +4,19 @@ import Render from "./../RenderSystem/Render.js"
 
 class CursorEffect extends Particle
 {
-    constructor() {
-        super(1)
+    constructor(_lifetime, _pos, _scale) {
+        super(_lifetime, _pos, _scale)
 
-        this.Color = "blue"
+        this.Color = "skyblue"
     }
 
     Update() {
-        Render.DrawCircle()
+        Render.DrawCircle(this.Position, this.Scale, this.Color)
+        this.Scale += 4
+
+        if (this.Scale >= 15) {
+            this.Remove()
+        }
     }
 }
 

@@ -24,7 +24,7 @@ function GameLoop()
     }
 
     for (let particleID in Particle.List) {
-        Particle.List[particleID].ParticleUpdate(deltaTime)
+        Particle.List[particleID].ParticleTick(deltaTime)
     }
 
     Input.ResetInput()

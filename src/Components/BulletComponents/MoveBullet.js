@@ -1,6 +1,6 @@
-import Component from "./../BaseClass/CBaseComponent.js"
+import Component from "./../../BaseClass/CBaseComponent.js"
 
-import Vector2 from "./../Structs/Vector2.js"
+import Vector2 from "./../../Structs/Vector2.js"
 
 class MoveBullet extends Component
 {

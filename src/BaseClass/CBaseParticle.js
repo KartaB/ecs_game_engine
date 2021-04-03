@@ -1,13 +1,16 @@
 import Utils from "./../Utility/Utils.js"
 import { CurTime } from "./../Utility/CurTime.js"
+import Vector2 from "../Structs/Vector2.js"
 
 class Particle
 {
     static List = []
 
-    constructor(_lifetime) {
+    constructor(_lifetime = 1, _pos = new Vector2(), _scale = 20) {
         this.id = Utils.RandomID()
         this.Lifetime = CurTime() + _lifetime
+        this.Scale = _scale
+        this.Position = _pos
 
         Particle.List[this.id] = this
 

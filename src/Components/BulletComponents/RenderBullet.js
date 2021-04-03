@@ -1,7 +1,7 @@
-import Component from "./../BaseClass/CBaseComponent.js"
+import Component from "../../BaseClass/CBaseComponent.js"
 
-import Vector2 from "./../Structs/Vector2.js"
-import Render from "./../RenderSystem/Render.js"
+import Vector2 from "../../Structs/Vector2.js"
+import Render from "../../RenderSystem/Render.js"
 
 class RenderBullet extends Component
 {

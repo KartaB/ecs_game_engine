@@ -1,6 +1,6 @@
-import Component from "./../BaseClass/CBaseComponent.js"
+import Component from "./../../BaseClass/CBaseComponent.js"
 
-import Utils from "./../Utility/Utils.js"
+import Utils from "./../../Utility/Utils.js"
 
 class MoveUnit extends Component
 {
