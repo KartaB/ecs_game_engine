@@ -3,8 +3,11 @@ import { UpdateCurTime, DeltaTime } from "./Utility/CurTime.js"
 
 import Entity from "./BaseClass/CBaseEntity.js"
 import Particle from "./BaseClass/CBaseParticle.js"
+import Button from "./BaseClass/CBaseButton.js"
+
 import Input from "./Input/InputManager.js"
 import Render from "./RenderSystem/Render.js"
+import Utils from "./Utility/Utils.js"
 
 function GameLoop()
 {
@@ -12,6 +15,25 @@ function GameLoop()
 
     UpdateCurTime()
     Render.AdjustScreen()
+    
+    let buttonList = Button.List
+    let cursorPos = Input.GetCursorPosition()
+
+    for (let buttonID in buttonList) {
+        let btn = buttonList[buttonID]   
+        if ( Utils.IsVectorInBox(cursorPos, btn.BBoxStart, btn.BBoxEnd) ) {
+            btn.OnHoverHandler()
+            if (Input.GetLeftClick()) {
+                btn.OnClick()
+                Input.ResetLeftClick()
+                break;
+            }
+
+        } else if (btn.Hovered) {
+            btn.Hovered = false
+            btn.OnHoverOut()
+        }
+    }
     
     Update(deltaTime)
 
@@ -23,8 +45,13 @@ function GameLoop()
         }
     }
 
-    for (let particleID in Particle.List) {
-        Particle.List[particleID].ParticleTick(deltaTime)
+    let particleList = Particle.List
+    for (let particleID in particleList) {
+        particleList[particleID].ParticleTick(deltaTime)
+    }
+
+    for (let buttonID in buttonList) {
+        buttonList[buttonID].Draw()
     }
 
     Input.ResetInput()

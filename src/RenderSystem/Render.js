@@ -61,6 +61,11 @@ function DrawText(_text, _start, _color = "black", _fontSize = 30, _align = "cen
     }
 }
 
+function MeasureText(_text, _fontSize) {
+    RenderWindowContext.font = `${_fontSize}px Arial`
+    return RenderWindowContext.measureText(_text).width
+}
+
 export default {
     RenderWindow,
     AdjustScreen,
@@ -69,5 +74,7 @@ export default {
     DrawLine,
     DrawCircle,
     DrawRect,
-    DrawText
+    DrawText,
+
+    MeasureText
 }

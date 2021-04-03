@@ -1,16 +1,32 @@
-import Render from "./RenderSystem/Render.js"
-import Vector2 from "./Structs/Vector2.js"
-import Input from "./Input/InputManager.js"
 import Ents from "./BaseClass/CBaseStaticEntity.js"
-import Utils from "./Utility/Utils.js"
+import Button from "./BaseClass/CBaseButton.js"
 
 import Unit from "./Entities/Unit.js"
 import CursorEffect from "./Particles/CursorEffect.js"
 
+import Render from "./RenderSystem/Render.js"
+import Vector2 from "./Structs/Vector2.js"
+import Input from "./Input/InputManager.js"
+import Utils from "./Utility/Utils.js"
+
 let selectedSquadID = null
+let showSquadInfo = false
 export function Main()
 {
-
+    let btn = new Button("+", new Vector2(30, 74))
+    btn.SetWidth(18)
+    btn.SetHeight(18)
+    btn.OnClick = function() {
+        showSquadInfo = !showSquadInfo
+    }
+    btn.OnHover = function() {
+        btn.TextColor = "white"
+        btn.BorderColor = "white"
+    }
+    btn.OnHoverOut = function() {
+        btn.TextColor = "gray"
+        btn.BorderColor = "lightgray"
+    }
 }
 
 export function Update(deltaTime)
@@ -108,6 +124,11 @@ function CreateSquad(_size, _pos) {
 
 function DrawSquadInfo() {
     let height = 80
+    if (!showSquadInfo) {
+        Render.DrawText("Click to show squad info", new Vector2(50, height), "gray", 20, "left")
+        return
+    }
+
     Render.DrawText(`Squad ID: ${selectedSquadID}`, new Vector2(50, height), "lightgray", 20, "left")
 
     let units = Ents.FindByClass("Unit")

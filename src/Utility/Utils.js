@@ -49,6 +49,16 @@ function Distance(_point1, _point2)
     return Math.sqrt( a*a + b*b );
 }
 
+function IsVectorInBox(_vec, _boxStart, _boxEnd) {
+    if (_vec.x >= _boxStart.x && _vec.x <= _boxEnd.x) {
+        if (_vec.y >= _boxStart.y && _vec.y <= _boxEnd.y) {
+            return true
+        }
+    }
+
+    return false
+}
+
 export default {
     RandomInt,
     RandomFloat,
@@ -57,5 +67,6 @@ export default {
     RandomColor,
     RandomID,
     
-    Distance
+    Distance,
+    IsVectorInBox
 }

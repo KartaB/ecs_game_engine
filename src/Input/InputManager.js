@@ -50,10 +50,18 @@ function GetCursorPosition() {
     return new Vector2(mouseX, mouseY)
 }
 
+function ResetLeftClick() {
+    leftButtonClicked = false
+}
+
+function ResetRightClick() {
+    rightButtonClicked = false
+}
+
 /* Reset input */
 function ResetInput() {
-    leftButtonClicked = false
-    rightButtonClicked = false
+    ResetLeftClick()
+    ResetRightClick()
 }
 
 export default {
@@ -61,5 +69,8 @@ export default {
     GetLeftClick,
     GetRightClick,
     GetCursorPosition,
-    ResetInput
+
+    ResetLeftClick,
+    ResetRightClick,
+    ResetInput,
 }
