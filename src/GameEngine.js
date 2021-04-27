@@ -59,5 +59,8 @@ function GameLoop()
     window.requestAnimationFrame(GameLoop)
 }
 
+UpdateCurTime()
+Render.AdjustScreen()
+
 Main()
 window.requestAnimationFrame(GameLoop)

@@ -18,6 +18,11 @@ class Vector2
         this.x *= _num
         this.y *= _num
     }
+    
+    Div(_num) {
+        this.x /= _num
+        this.y /= _num
+    }
 
     AngleRad(p2)
     {
