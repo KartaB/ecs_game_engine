@@ -1,5 +1,7 @@
 import { Main, Update } from "./main.js"
-import { UpdateCurTime, DeltaTime } from "./Utility/CurTime.js"
+import { UpdateCurTime, CurTime, DeltaTime } from "./Utility/CurTime.js"
+import { SetRenderedFramesCount, GetRenderedFramesCount } from "./Utility/CurTime.js"
+import { SetNextFpsCheck, GetNextFpsCheck, SetFpsCount, GetFPS } from "./Utility/CurTime.js"
 
 import Entity from "./BaseClass/CBaseEntity.js"
 import Particle from "./BaseClass/CBaseParticle.js"
@@ -35,7 +37,7 @@ function GameLoop()
         }
     }
     
-    Update(deltaTime)
+    Update(deltaTime, GetFPS())
 
     let entList = Entity.List
     for (let entID in entList) {
@@ -57,6 +59,14 @@ function GameLoop()
     Input.ResetInput()
 
     window.requestAnimationFrame(GameLoop)
+
+    /* FPS thingy */
+    SetRenderedFramesCount( GetRenderedFramesCount() + 1 )
+    if (CurTime() >= GetNextFpsCheck())
+    {
+        SetFpsCount( GetRenderedFramesCount() )
+        SetNextFpsCheck(CurTime() + 1)
+    }
 }
 
 UpdateCurTime()

@@ -22,3 +22,39 @@ export function DeltaTime()
 
     return deltaTime
 }
+
+/* FPS Counter */
+let nextFpsCheck = CurTime() + 1
+let renderedFramesCount = 0
+let framesPerSecond = 0
+
+export function SetRenderedFramesCount(value)
+{
+    renderedFramesCount = value
+}
+
+export function GetRenderedFramesCount()
+{
+    return renderedFramesCount
+}
+
+export function GetNextFpsCheck()
+{
+    return nextFpsCheck
+}
+
+export function SetNextFpsCheck(next)
+{
+    nextFpsCheck = next
+}
+
+export function SetFpsCount(fpsCount)
+{
+    framesPerSecond = fpsCount
+    renderedFramesCount = 0
+}
+
+export function GetFPS()
+{
+    return framesPerSecond
+}

@@ -55,6 +55,11 @@ class Vector2
 
         return aimVector
     }
+
+    Magnitude()
+    {
+        return Math.sqrt(this.x * this.x + this.y * this.y)
+    }
 }
 
 export default Vector2

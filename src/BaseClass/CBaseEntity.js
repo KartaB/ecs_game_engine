@@ -14,6 +14,7 @@ class Entity
         this.components = []
 
         this.AddComponent(new Transform())
+        this.transform = this.GetComponent("Transform")
 
         Entity.List[this.id] = this
 
@@ -33,6 +34,8 @@ class Entity
     }
 
     RemoveComponent(_componentName) {
+        if (_componentName == "Transform") return;
+
         delete this.components[_componentName]
     }
 
@@ -41,6 +44,7 @@ class Entity
     }
 
     Remove() {
+        delete this.transform
         for (let compName in this.components) {
             delete this.components[compName]
         }
