@@ -12,7 +12,7 @@ class Button
         this.Position = _pos
         this.Text = _text
         this.Border = true
-        this.DrawBorder = false
+        this.ShowBBox = false
 
         this.FontSize = 20
         this.Width = Render.MeasureText(this.Text, this.FontSize) + (this.FontSize * 0.66)
@@ -26,6 +26,11 @@ class Button
         this.UpdateBBox()
 
         Button.List[this.id] = this
+    }
+
+    SetPosition(_position) {
+        this.Position = _position
+        this.UpdateBBox()
     }
 
     SetWidth(_width) {
@@ -57,7 +62,7 @@ class Button
     }
 
     OnHover() {
-        console.log("test")
+        
     }
 
     OnHoverOut() {
@@ -73,7 +78,7 @@ class Button
             Render.DrawRect(borderStart, new Vector2(this.Width, this.Height), this.BorderColor, false)
         }
 
-        if (this.DrawBorder) {
+        if (this.ShowBBox) {
             Render.DrawCircle(this.BBoxStart, 3, "red")
             Render.DrawCircle(this.BBoxEnd, 3, "red")
         }

@@ -3,6 +3,8 @@ import { UpdateCurTime, CurTime, DeltaTime } from "./Utility/CurTime.js"
 import { SetRenderedFramesCount, GetRenderedFramesCount } from "./Utility/CurTime.js"
 import { SetNextFpsCheck, GetNextFpsCheck, SetFpsCount, GetFPS } from "./Utility/CurTime.js"
 
+import Events from "./Events/Events.js"
+
 import Entity from "./BaseClass/CBaseEntity.js"
 import Particle from "./BaseClass/CBaseParticle.js"
 import Button from "./BaseClass/CBaseButton.js"
@@ -56,7 +58,8 @@ function GameLoop()
         buttonList[buttonID].Draw()
     }
 
-    Input.ResetInput()
+    Input.ClearInput()
+    Events.ClearEvents()
 
     window.requestAnimationFrame(GameLoop)
 

@@ -6,12 +6,16 @@ let pressedKeys = []
 document.onkeypress = function(event) {
     let keyLower = event.key.toLowerCase()
     pressedKeys[keyLower] = true
+
+    pressedKeys["ctrl"] = event.ctrlKey
 }
 
 document.onkeyup = function(event)
 {
     let key = event.key.toLowerCase()
     pressedKeys[key] = false
+
+    pressedKeys["ctrl"] = event.ctrlKey
 }
 
 function GetKey(key) {
@@ -21,14 +25,18 @@ function GetKey(key) {
 
 /* Mouse buttons */
 let leftButtonClicked = false
-document.onclick = function() {
+document.onclick = function(event) {
     leftButtonClicked = true
+
+    pressedKeys["ctrl"] = event.ctrlKey
 }
 
 let rightButtonClicked = false
 document.oncontextmenu = function(event) {
     event.preventDefault()
     rightButtonClicked = true
+
+    pressedKeys["ctrl"] = event.ctrlKey
 }
 
 function GetLeftClick() {
@@ -37,6 +45,21 @@ function GetLeftClick() {
 
 function GetRightClick() {
     return rightButtonClicked
+}
+
+/* Mouse button click & hold */
+let leftClickDown = false
+document.onmousedown = function(event) {
+    leftClickDown = true
+}
+
+document.onmouseup = function(event) {
+    leftClickDown = false
+}
+
+function GetLeftClickDown()
+{
+    return leftClickDown
 }
 
 /* Cursor position */
@@ -59,7 +82,7 @@ function ResetRightClick() {
 }
 
 /* Reset input */
-function ResetInput() {
+function ClearInput() {
     ResetLeftClick()
     ResetRightClick()
 }
@@ -68,9 +91,12 @@ export default {
     GetKey,
     GetLeftClick,
     GetRightClick,
+
+    GetLeftClickDown,
+    
     GetCursorPosition,
 
     ResetLeftClick,
     ResetRightClick,
-    ResetInput,
+    ClearInput,
 }
