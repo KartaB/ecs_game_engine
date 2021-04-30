@@ -64,6 +64,11 @@ function GetByName(_name) {
 }
 
 function Create(_name) {
+    if (CanvasStack[_name] != null) {
+        console.warn(`Trying to create already existing canvas: ${_name}`)
+        return CanvasStack[_name]
+    }
+
     const CanvasDOM = document.createElement("canvas")
     CanvasDOM.id = _name
     CanvasDOM.style.zIndex = 0

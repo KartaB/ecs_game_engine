@@ -18,20 +18,9 @@ function ClampVector(val, min, max)
 
 function Lerp(val, dest, percentage)
 {
-    percentage = Clamp(percentage, 0, 1)
     let difference = (dest - val)
 
     let result = difference * percentage
-
-    // Lerp(60, 50, 0.5) == -5
-    if (difference < 0 && val + difference < dest) {
-        return dest
-    }
-    
-    // Lerp(50, 60, 0.5) == 5
-    if (difference > 0 && val + difference > dest) {
-        return dest
-    }
     
     return (val + result)
 }
