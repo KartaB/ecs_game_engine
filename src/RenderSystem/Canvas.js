@@ -50,6 +50,10 @@ class Canvas
         Render.DrawText(this.CanvasData.Context, _text, _start, _color, _fontSize, _align, _fill)
     }
 
+    DrawMultiColorText(_start, _fontSize, _fill, _textData) {
+        Render.DrawMultiColorText(this.CanvasData.Context, _start, _fontSize, _fill, _textData)
+    }
+
     MeasureText(_text, _fontSize) {
         return Render.MeasureText(this.CanvasData.Context, _text, _fontSize)
     }

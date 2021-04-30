@@ -1,3 +1,5 @@
+import Vector2 from "../Structs/Vector2.js"
+
 function SetBackgroundColor(_color)
 {
     document.body.style.backgroundColor = _color
@@ -60,6 +62,21 @@ function DrawText(_ctx, _text, _start, _color = "black", _fontSize = 30, _align 
     }
 }
 
+function DrawMultiColorText(_ctx, _start, _fontSize, _fill, _textData)
+{
+    const RenderWindowContext = _ctx
+    let xOffset = 0
+
+    for (const textData of _textData)
+    {
+        const newPos = Vector2.Copy(_start)
+        newPos.x += xOffset
+
+        DrawText(RenderWindowContext, textData.text, newPos, textData.color, _fontSize, "left", _fill)
+        xOffset += MeasureText(RenderWindowContext, textData.text, _fontSize)
+    }
+}
+
 function MeasureText(_ctx, _text, _fontSize)
 {
     const RenderWindowContext = _ctx
@@ -75,6 +92,7 @@ export default {
     DrawCircle,
     DrawRect,
     DrawText,
+    DrawMultiColorText,
 
     MeasureText
 }
