@@ -17,6 +17,12 @@ class Ents
     static GetAll() {
         return Entity.List
     }
+
+    static ForEach(array, callback) {
+        for (const ent in array) {
+            callback(this.FindByID(ent))
+        }
+    }
 }
 
 export default Ents

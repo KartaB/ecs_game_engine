@@ -1,24 +1,24 @@
+import Canvas from "./RenderSystem/Canvas.js"
 import { Main, Update } from "./main.js"
+
 import { UpdateCurTime, CurTime, DeltaTime } from "./Utility/CurTime.js"
 import { SetRenderedFramesCount, GetRenderedFramesCount } from "./Utility/CurTime.js"
 import { SetNextFpsCheck, GetNextFpsCheck, SetFpsCount, GetFPS } from "./Utility/CurTime.js"
 
+import Input from "./Input/InputManager.js"
 import Events from "./Events/Events.js"
 
 import Entity from "./BaseClass/CBaseEntity.js"
 import Particle from "./BaseClass/CBaseParticle.js"
 import Button from "./BaseClass/CBaseButton.js"
 
-import Input from "./Input/InputManager.js"
-import Render from "./RenderSystem/Render.js"
 import Utils from "./Utility/Utils.js"
+import Ents from "./BaseClass/CBaseStaticEntity.js"
 
 function GameLoop()
 {
-    let deltaTime = DeltaTime()
-
     UpdateCurTime()
-    Render.AdjustScreen()
+    Canvas.ForEach(canvas => canvas.Resize())
     
     let buttonList = Button.List
     let cursorPos = Input.GetCursorPosition()
@@ -39,20 +39,10 @@ function GameLoop()
         }
     }
     
-    Update(deltaTime, GetFPS())
+    Update(DeltaTime(), GetFPS())
 
-    let entList = Entity.List
-    for (let entID in entList) {
-        let entComponents = entList[entID].components
-        for (let component in entComponents) {
-            entList[entID].GetComponent(component).ComponentHandler(deltaTime)
-        }
-    }
-
-    let particleList = Particle.List
-    for (let particleID in particleList) {
-        particleList[particleID].ParticleTick(deltaTime)
-    }
+    EntityTick(DeltaTime())
+    ParticleTick(DeltaTime())
 
     for (let buttonID in buttonList) {
         buttonList[buttonID].Draw()
@@ -61,9 +51,40 @@ function GameLoop()
     Input.ClearInput()
     Events.ClearEvents()
 
-    window.requestAnimationFrame(GameLoop)
-
     /* FPS thingy */
+    CalculateFPS()
+
+    window.requestAnimationFrame(GameLoop)
+}
+
+/* Run those before executing game loop */
+UpdateCurTime()
+Canvas.ForEach(canvas => canvas.Resize())
+
+/* Execute game loop */
+Main()
+window.requestAnimationFrame(GameLoop)
+
+function EntityTick(deltaTime)
+{
+    Ents.ForEach(Entity.List, ent => {
+        let entComponents = ent.components
+        for (let component in entComponents) {
+            ent.GetComponent(component).ComponentHandler(deltaTime)
+        }
+    })
+}
+
+function ParticleTick(deltaTime)
+{
+    let particleList = Particle.List
+    for (let particleID in particleList) {
+        particleList[particleID].ParticleTick(deltaTime)
+    }
+}
+
+function CalculateFPS()
+{
     SetRenderedFramesCount( GetRenderedFramesCount() + 1 )
     if (CurTime() >= GetNextFpsCheck())
     {
@@ -71,9 +92,3 @@ function GameLoop()
         SetNextFpsCheck(CurTime() + 1)
     }
 }
-
-UpdateCurTime()
-Render.AdjustScreen()
-
-Main()
-window.requestAnimationFrame(GameLoop)

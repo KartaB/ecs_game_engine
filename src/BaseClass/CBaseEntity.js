@@ -12,9 +12,8 @@ class Entity
         this.id = Utils.RandomID()
         this.index = Entity.Count++
         this.components = []
-
-        this.AddComponent(new Transform())
-        this.transform = this.GetComponent("Transform")
+       
+        this.transform = this.AddComponent(new Transform())
 
         Entity.List[this.id] = this
 
@@ -31,6 +30,8 @@ class Entity
     AddComponent(_component) {
         _component.owner = this
         this.components[_component.name] = _component
+
+        return this.components[_component.name]
     }
 
     RemoveComponent(_componentName) {
