@@ -10,6 +10,8 @@ class Canvas
 
         this.Name = _name
         this.CanvasData = undefined
+
+        return this
     }
 
     Remove() {
@@ -17,45 +19,62 @@ class Canvas
         delete CanvasStack[this.Name]
     }
     
-    SetZBuffer(_num) {
+    SetZIndex(_num) {
         this.CanvasData.Node.style.zIndex = _num
+
+        return this
     }
 
-    GetZBuffer() {
+    GetZIndex() {
         return this.CanvasData.Node.style.zIndex
     }
 
-    Resize() {
-        this.CanvasData.Node.width = window.innerWidth
-        this.CanvasData.Node.height = window.innerHeight
+    Resize(_width = window.innerWidth, _height = window.innerHeight) {
+        this.CanvasData.Node.width = _width
+        this.CanvasData.Node.height = _height
+
+        return this
     }
 
     GetSize() {
         return new Vector2(this.CanvasData.Node.width, this.CanvasData.Node.height)
     }
 
-    DrawLine(_start, _end, _color = "black") {
-        Render.DrawLine(this.CanvasData.Context, _start, _end, _color)
+    DrawLine(_start, _end, data = {})
+    {
+        const { color = "black" } = data
+        Render.DrawLine(this.CanvasData.Context, _start, _end, color)
     }
 
-    DrawCircle(_start, _radius, _color = "black", _fill = false) {
-        Render.DrawCircle(this.CanvasData.Context, _start, _radius, _color, _fill)
+    DrawCircle(_start, data = {})
+    {
+        const { radius = 10, color = "black", fill = true } = data
+        Render.DrawCircle(this.CanvasData.Context, _start, radius, color, fill)
     }
 
-    DrawRect(_start, _length, _color = "black", _fill = false) {
-        Render.DrawRect(this.CanvasData.Context, _start, _length, _color, _fill)
+    DrawRect(_start, _length, data = {})
+    {
+        const { color = "black", fill = true } = data
+        Render.DrawRect(this.CanvasData.Context, _start, _length, color, fill)
     }
 
-    DrawText(_text, _start, _color = "black", _fontSize = 30, _align = "center", _fill = true) {
-        Render.DrawText(this.CanvasData.Context, _text, _start, _color, _fontSize, _align, _fill)
+    DrawText(_text, _start, data = {})
+    {
+        const { color = "black", fontSize = 30, align = "center", fill = true } = data
+        Render.DrawText(this.CanvasData.Context, _text, _start, color, fontSize, align, fill)
     }
 
-    DrawMultiColorText(_start, _fontSize, _fill, _textData) {
-        Render.DrawMultiColorText(this.CanvasData.Context, _start, _fontSize, _fill, _textData)
+    DrawMultiColorText(_start, data = {})
+    {
+        const { fontSize = 30, fill = true, textData } = data
+        Render.DrawMultiColorText(this.CanvasData.Context, _start, fontSize, fill, textData)
     }
 
     MeasureText(_text, _fontSize) {
-        return Render.MeasureText(this.CanvasData.Context, _text, _fontSize)
+        return {
+            width: Render.MeasureText(this.CanvasData.Context, _text, _fontSize),
+            height: _fontSize
+        }
     }
 }
 

@@ -47,6 +47,16 @@ function GetRightClick() {
     return rightButtonClicked
 }
 
+/* Double click */
+let doubleClick = false
+document.ondblclick = function(event) {
+    doubleClick = true
+}
+
+function GetDoubleClick() {
+    return doubleClick
+}
+
 /* Mouse button click & hold */
 let leftClickDown = false
 document.onmousedown = function(event) {
@@ -81,17 +91,22 @@ function ResetRightClick() {
     rightButtonClicked = false
 }
 
+function ResetDoubleClick() {
+    doubleClick = false
+}
+
 /* Reset input */
 function ClearInput() {
     ResetLeftClick()
     ResetRightClick()
+    ResetDoubleClick()
 }
 
 export default {
     GetKey,
     GetLeftClick,
     GetRightClick,
-
+    GetDoubleClick,
     GetLeftClickDown,
     
     GetCursorPosition,

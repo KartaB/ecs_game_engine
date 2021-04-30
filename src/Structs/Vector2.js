@@ -3,6 +3,8 @@ class Vector2
     constructor(_x = 0, _y = 0) {
         this.x = _x
         this.y = _y
+
+        return this
     }
 
     static Copy(_other) {
@@ -10,23 +12,35 @@ class Vector2
     }
 
     Add(_other) {
-        this.x += _other.x
-        this.y += _other.y
+        let value = Vector2.Copy(this)
+
+        value.x += _other.x
+        value.y += _other.y
+
+        return value
     }
 
     Mul(_num) {
-        this.x *= _num
-        this.y *= _num
+        let value = Vector2.Copy(this)
+
+        value.x *= _num
+        value.y *= _num
+
+        return value
     }
     
     Div(_num) {
-        this.x /= _num
-        this.y /= _num
+        let value = Vector2.Copy(this)
+
+        value.x /= _num
+        value.y /= _num
+
+        return value
     }
 
     AngleRad(p2)
     {
-        let p1 = new Vector2(this.x, this.y)
+        let p1 = Vector2.Copy(this)
         let angleRadians = Math.atan2(p2.y - p1.y, p2.x - p1.x);
 
         return angleRadians
@@ -34,7 +48,7 @@ class Vector2
     
     AngleDeg(p2)
     {
-        let p1 = new Vector2(this.x, this.y)
+        let p1 = Vector2.Copy(this)
         let angleDeg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
 
         return angleDeg
