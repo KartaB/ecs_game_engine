@@ -19,6 +19,7 @@ Canvas.Create("debug").SetZIndex(1000)
 
 function GameLoop()
 {
+    document.body.style.cursor = "auto"
     const mousePos = Input.GetCursorPosition()
 
     UpdateCurTime()
@@ -59,7 +60,7 @@ function HandleClickables(mousePos)
             foundClickables.push(item)
         } else {
             if (item.MouseOver) {
-                if (item.RetainStyle) item.RestoreStyle()
+                if (item.RetainDefaultStyle) item.RestoreStyle()
                 item.OnMouseOut()
                 item.MouseOver = false
             }
@@ -75,7 +76,7 @@ function HandleClickables(mousePos)
     }
 
     foundClickables.forEach((item) => {
-        if (item.RetainStyle) item.SaveStyle()
+        if (item.RetainDefaultStyle) item.SaveStyle()
         item.OnMouseOver()
         item.MouseOver = true
 
@@ -90,6 +91,8 @@ function HandleClickables(mousePos)
         if (Input.GetDoubleClick()) {
             item.OnDoubleClick()
         }
+
+        document.body.style.cursor = item.Style.Cursor
     })
 }
 

@@ -14,6 +14,7 @@ class Button extends Clickable
             FontSize: 20,
             Border: true,
             BorderColor: "lightgray",
+            Cursor: "auto",
             BBox: false
         }
         

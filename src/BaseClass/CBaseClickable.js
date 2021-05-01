@@ -12,7 +12,7 @@ class Clickable
         
         this.Position = _pos
         this.MouseOver = false
-        this.RetainStyle = true
+        this.RetainDefaultStyle = true
 
         this.Style = {
             Width: 0,
