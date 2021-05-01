@@ -19,6 +19,15 @@ class Vector2
 
         return value
     }
+    
+    Sub(_other) {
+        let value = Vector2.Copy(this)
+
+        value.x -= _other.x
+        value.y -= _other.y
+
+        return value
+    }
 
     Mul(_num) {
         let value = Vector2.Copy(this)

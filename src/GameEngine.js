@@ -9,44 +9,27 @@ import Input from "./Input/InputManager.js"
 import Events from "./Events/Events.js"
 
 import Entity from "./BaseClass/CBaseEntity.js"
+import Clickable from "./BaseClass/CBaseClickable.js"
 import Particle from "./BaseClass/CBaseParticle.js"
-import Button from "./BaseClass/CBaseButton.js"
 
 import Utils from "./Utility/Utils.js"
 import Ents from "./BaseClass/CBaseStaticEntity.js"
 
+Canvas.Create("debug").SetZIndex(1000)
+
 function GameLoop()
 {
+    const mousePos = Input.GetCursorPosition()
+
     UpdateCurTime()
     Canvas.ForEach(canvas => canvas.Resize())
-    
-    let buttonList = Button.List
-    let cursorPos = Input.GetCursorPosition()
 
-    for (let buttonID in buttonList) {
-        let btn = buttonList[buttonID]   
-        if ( Utils.IsVectorInBox(cursorPos, btn.BBoxStart, btn.BBoxEnd) ) {
-            btn.OnHoverHandler()
-            if (Input.GetLeftClick()) {
-                btn.OnClick()
-                Input.ResetLeftClick()
-                break;
-            }
-
-        } else if (btn.Hovered) {
-            btn.Hovered = false
-            btn.OnHoverOut()
-        }
-    }
+    HandleClickables(mousePos)
     
     Update(DeltaTime(), GetFPS())
 
-    EntityTick(DeltaTime())
-    ParticleTick(DeltaTime())
-
-    for (let buttonID in buttonList) {
-        buttonList[buttonID].Draw()
-    }
+    HandleEntities(DeltaTime())
+    HandleParticles(DeltaTime())
 
     Input.ClearInput()
     Events.ClearEvents()
@@ -65,7 +48,52 @@ Canvas.ForEach(canvas => canvas.Resize())
 Main()
 window.requestAnimationFrame(GameLoop)
 
-function EntityTick(deltaTime)
+function HandleClickables(mousePos)
+{
+    let foundClickables = []
+
+    Clickable.ForEach((item) => {
+        item.Update()
+
+        if ( Utils.IsVectorInBox(mousePos, item.BBoxStart, item.BBoxEnd) ) {
+            foundClickables.push(item)
+        } else {
+            if (item.MouseOver) {
+                if (item.RetainStyle) item.RestoreStyle()
+                item.OnMouseOut()
+                item.MouseOver = false
+            }
+        }
+    })
+
+    if (foundClickables == 0) return
+
+    if (foundClickables.length > 1) {
+        const lowestIndex = Clickable.FindLowestZIndex(foundClickables)
+
+        foundClickables = foundClickables.filter((item) => item.zIndex == lowestIndex)
+    }
+
+    foundClickables.forEach((item) => {
+        if (item.RetainStyle) item.SaveStyle()
+        item.OnMouseOver()
+        item.MouseOver = true
+
+        if (Input.GetLeftClick()) {
+            item.OnMouseClick()
+        }
+
+        if (Input.GetLeftClickDown()) {
+            item.OnMouseDown()
+        }
+
+        if (Input.GetDoubleClick()) {
+            item.OnDoubleClick()
+        }
+    })
+}
+
+function HandleEntities(deltaTime)
 {
     Ents.ForEach(Entity.List, ent => {
         let entComponents = ent.components
@@ -75,7 +103,7 @@ function EntityTick(deltaTime)
     })
 }
 
-function ParticleTick(deltaTime)
+function HandleParticles(deltaTime)
 {
     let particleList = Particle.List
     for (let particleID in particleList) {

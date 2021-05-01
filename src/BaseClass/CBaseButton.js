@@ -1,87 +1,49 @@
+import Clickable from "./CBaseClickable.js"
+
+import Canvas from "../RenderSystem/Canvas.js"
 import Vector2 from "../Structs/Vector2.js"
-import Render from "./../RenderSystem/Render.js"
-import Utils from "./../Utility/Utils.js"
 
-class Button
+class Button extends Clickable
 {
-    static List = []
+    constructor(_pos = new Vector2(), _text = "Button") {
+        super(_pos)
 
-    constructor(_text = "Button", _pos = new Vector2()) {
-        this.id = Utils.RandomID()
-
-        this.Position = _pos
-        this.Text = _text
-        this.Border = true
-        this.ShowBBox = false
-
-        this.FontSize = 20
-        this.Width = Render.MeasureText(this.Text, this.FontSize) + (this.FontSize * 0.66)
-        this.Height = this.FontSize + (this.FontSize * 0.25)
-
-        this.TextColor = "gray"
-        this.BorderColor = "lightgray"
-
-        this.Hovered = false
-
-        this.UpdateBBox()
-
-        Button.List[this.id] = this
-    }
-
-    SetPosition(_position) {
-        this.Position = _position
-        this.UpdateBBox()
-    }
-
-    SetWidth(_width) {
-        this.Width = _width
-        this.UpdateBBox()
-    }
-    
-    SetHeight(_height) {
-        this.Height = _height
-        this.UpdateBBox()
-    }
-
-    UpdateBBox() {
-        this.BBoxStart = new Vector2(this.Position.x - this.Width/2, this.Position.y - this.Height/2)
-        this.BBoxEnd = new Vector2(this.BBoxStart.x + this.Width, this.BBoxStart.y + this.Height)
-    }
-
-    Remove() {
-        delete Button.List[this.id]
-    }
-
-    OnClick() {
+        this.Style = {
+            Text: _text,
+            TextColor: "gray",
+            FontSize: 20,
+            Border: true,
+            BorderColor: "lightgray",
+            BBox: false
+        }
         
+        this.CalculateFromFont()
     }
 
-    OnHoverHandler() {
-        this.OnHover()
-        this.Hovered = true
-    }
-
-    OnHover() {
-        
-    }
-
-    OnHoverOut() {
-        
+    CalculateFromFont() {
+        const textData = Canvas.GetByName("debug").MeasureText(this.Style.Text, this.Style.FontSize)
+        this.SetWidth(textData.width + (this.Style.FontSize * 0.66))
+        this.SetHeight(this.Style.FontSize + (this.Style.FontSize * 0.25))
     }
 
     Draw() {
-        let textPos = new Vector2(this.Position.x, this.Position.y + (this.FontSize * 0.33))
-        Render.DrawText(this.Text, textPos, this.TextColor, this.FontSize, "center")
+        const canvas = Canvas.GetByName("debug")
 
-        if (this.Border) {
+        let textPos = new Vector2(this.Position.x, this.Position.y + (this.Style.FontSize * 0.33))
+        canvas.DrawText(this.Style.Text, textPos, {color: this.Style.TextColor, fontSize: this.Style.FontSize, align: "center"})
+
+        if (this.Style.Border) {
             let borderStart = this.BBoxStart
-            Render.DrawRect(borderStart, new Vector2(this.Width, this.Height), this.BorderColor, false)
+            canvas.DrawRect(borderStart, new Vector2(this.Style.Width, this.Style.Height), {color: this.Style.BorderColor, fill: false})
         }
+    }
 
-        if (this.ShowBBox) {
-            Render.DrawCircle(this.BBoxStart, 3, "red")
-            Render.DrawCircle(this.BBoxEnd, 3, "red")
-        }
+    OnMouseOver() {
+        
+    }
+
+    OnMouseOut() {
+        
     }
 }
 
