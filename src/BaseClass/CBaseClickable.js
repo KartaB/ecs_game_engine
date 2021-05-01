@@ -8,10 +8,12 @@ class Clickable
 
     constructor(_pos = new Vector2()) {
         this.id = Utils.RandomID()
-        this.zIndex = 0
-        
+        this.zIndex = 0       
         this.Position = _pos
+
         this.MouseOver = false
+        this.Active = false
+        
         this.RetainDefaultStyle = true
 
         this.Style = {

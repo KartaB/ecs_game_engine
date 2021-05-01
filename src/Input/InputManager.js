@@ -2,12 +2,16 @@ import Vector2 from "./../Structs/Vector2.js"
 
 /* Keyboard buttons */
 let pressedKeys = []
+let inputPress = ""
 
-document.onkeypress = function(event) {
+document.onkeydown = function(event) {
     let keyLower = event.key.toLowerCase()
     pressedKeys[keyLower] = true
 
     pressedKeys["ctrl"] = event.ctrlKey
+    pressedKeys["shift"] = event.shiftKey
+
+    inputPress = event.key.toLowerCase()
 }
 
 document.onkeyup = function(event)
@@ -16,11 +20,19 @@ document.onkeyup = function(event)
     pressedKeys[key] = false
 
     pressedKeys["ctrl"] = event.ctrlKey
+    pressedKeys["shift"] = event.shiftKey
 }
 
 function GetKey(key) {
     let keyLower = key.toLowerCase()
     return pressedKeys[keyLower]
+}
+
+function GetPressed() {
+    const input = inputPress
+    inputPress = ""
+
+    return input
 }
 
 /* Mouse buttons */
@@ -104,6 +116,7 @@ function ClearInput() {
 
 export default {
     GetKey,
+    GetPressed,
     GetLeftClick,
     GetRightClick,
     GetDoubleClick,

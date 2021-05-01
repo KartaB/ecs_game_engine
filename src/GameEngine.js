@@ -65,6 +65,10 @@ function HandleClickables(mousePos)
                 item.MouseOver = false
             }
         }
+
+        if (Input.GetLeftClick() || Input.GetLeftClickDown()) {
+            item.Active = false
+        }
     })
 
     if (foundClickables == 0) return
@@ -79,9 +83,11 @@ function HandleClickables(mousePos)
         if (item.RetainDefaultStyle) item.SaveStyle()
         item.OnMouseOver()
         item.MouseOver = true
+        document.body.style.cursor = item.Style.Cursor
 
         if (Input.GetLeftClick()) {
             item.OnMouseClick()
+            item.Active = true
         }
 
         if (Input.GetLeftClickDown()) {
@@ -91,8 +97,6 @@ function HandleClickables(mousePos)
         if (Input.GetDoubleClick()) {
             item.OnDoubleClick()
         }
-
-        document.body.style.cursor = item.Style.Cursor
     })
 }
 
