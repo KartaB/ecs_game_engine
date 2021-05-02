@@ -7,10 +7,11 @@ import Mathf from "../Utility/Mathf.js"
 
 class RangeInputHorizontal extends Clickable
 {
+    #RangeValue = 0
+
     constructor(_pos = new Vector2()) {
         super(_pos)
 
-        this.Value = 0
         this.Min = 0
         this.Max = 10
 
@@ -31,23 +32,28 @@ class RangeInputHorizontal extends Clickable
         this.SetHeight(10)
     }
 
-    GetValue() {
-        return this.Text
+    set Value(_value) {
+        const numValue = this.RoundValue ? parseInt(_value) : parseFloat(_value).toFixed(this.DecimalPlaces)
+
+        if (isNaN(numValue)) {
+            console.warn(`Trying to set non-numeric value. Aborting!`)
+            return
+        }
+
+        this.#RangeValue = Mathf.Clamp(numValue, this.Min, this.Max)
     }
 
-    SetValue(_value) {
-        this.Text = _value
+    get Value() {
+        return this.#RangeValue
     }
 
     Update() {
-        this.ClampValue()
         this.Draw()
         this.DrawBBox()
     }
 
     HandleInput() {
         this.Value = this.VectorToValue(Input.GetCursorPosition())
-        this.ClampValue()
     }
 
     Draw() {
@@ -92,18 +98,12 @@ class RangeInputHorizontal extends Clickable
         const percentage = -(offset/this.Style.Width)
 
         const valueRange = Math.abs(this.Min - this.Max)
-        let newValue = (this.Min + (valueRange * percentage)).toFixed(this.DecimalPlaces)
+        let newValue = this.Min + (valueRange * percentage)
         if (this.RoundValue) {
             newValue = Math.round(newValue)
         }
 
         return newValue
-    }
-
-    ClampValue(_min = this.Min, _max = this.Max) {
-        if (this.Value < this.Min || this.Value > this.Max) {          
-            this.Value = Mathf.Clamp(this.Value, this.Min, this.Max)
-        }
     }
 
     OnMouseDown() {

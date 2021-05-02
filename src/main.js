@@ -17,16 +17,21 @@ let canvas, range
 export function Main()
 {
     canvas = Canvas.GetByName("debug")
+    
     range = new RangeInputHorizontal(canvas.GetSize().Div(2))
-
-    range.Min = -100
-    range.Max = 100
-    range.RoundValue = true
+    range.Min = -5
+    range.Max = 5
+    range.RoundValue = false
 
     let btnSub = new Button(canvas.GetSize().Div(2).Sub(new Vector2(range.Style.Width/2 + 25, 0)), "-")
     btnSub.Style.Cursor = "pointer"
     btnSub.SetWidth(20)
     btnSub.SetHeight(20)
+
+    btnSub.OnMouseOver = () => {
+        btnSub.Style.Background = true
+        btnSub.Style.BackgroundColor = "rgb(240, 240, 240)"
+    }
 
     btnSub.OnMouseClick = () => {
         range.Value--
@@ -34,13 +39,37 @@ export function Main()
     
     let btnAdd = new Button(canvas.GetSize().Div(2).Add(new Vector2(range.Style.Width/2 + 25, 0)), "+")
     btnAdd.Style.Cursor = "pointer"
-    btnAdd.Style.Background = true
-    btnAdd.Style.BackgroundColor = "lightgray"
     btnAdd.SetWidth(20)
     btnAdd.SetHeight(20)
 
+    btnAdd.OnMouseOver = () => {
+        btnAdd.Style.Background = true
+        btnAdd.Style.BackgroundColor = "rgb(240, 240, 240)"
+    }
+
     btnAdd.OnMouseClick = () => {
         range.Value++
+    }
+
+    let changeValueInput = new TextInput(canvas.GetSize().Div(2).Add(new Vector2(-btnSub.Style.Width*2, 75)), "Enter numeric value")
+    changeValueInput.IsNumeric = true
+    changeValueInput.SetWidth(range.Style.Width)
+
+    changeValueInput.OnSubmit = () => {
+        range.Value = parseFloat(changeValueInput.GetValue())
+    }
+
+    let submitButton = new Button(canvas.GetSize().Div(2).Add(new Vector2(range.Style.Width/2 + 25, 75)), "Submit")
+    submitButton.SetHeight(changeValueInput.Style.Height)
+    submitButton.Style.Cursor = "pointer"
+
+    submitButton.OnMouseClick = () => {
+        range.Value = changeValueInput.GetValue()
+    }
+
+    submitButton.OnMouseOver = () => {
+        submitButton.Style.Background = true
+        submitButton.Style.BackgroundColor = "rgb(240, 240, 240)"
     }
 }
 

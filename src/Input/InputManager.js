@@ -29,10 +29,7 @@ function GetKey(key) {
 }
 
 function GetPressed() {
-    const input = inputPress
-    inputPress = ""
-
-    return input
+    return inputPress
 }
 
 /* Mouse buttons */
@@ -107,11 +104,16 @@ function ResetDoubleClick() {
     doubleClick = false
 }
 
+function ResetInputPress() {
+    inputPress = ""
+}
+
 /* Reset input */
 function ClearInput() {
     ResetLeftClick()
     ResetRightClick()
     ResetDoubleClick()
+    ResetInputPress()
 }
 
 export default {
@@ -126,5 +128,7 @@ export default {
 
     ResetLeftClick,
     ResetRightClick,
+    ResetDoubleClick,
+    ResetInputPress,
     ClearInput,
 }

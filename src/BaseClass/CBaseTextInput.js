@@ -11,6 +11,9 @@ class TextInput extends Clickable
         super(_pos)
 
         this.Text = "",
+        this.IsPassword = false
+        this.IsNumeric = false
+
         this.Style = {
             TextColor: "black",
             Placeholder: _placeholder,
@@ -54,7 +57,16 @@ class TextInput extends Clickable
         }
         
         if (input.length == 1) {
-            this.Text += Input.GetKey("shift") ? input.toUpperCase() : input             
+            if (this.IsNumeric && input != "." && Number.isInteger(parseInt(input)) === false) return
+            
+            const dotOccurences = this.Text.split(".").length - 1
+            if (input == "." && dotOccurences > 0) return
+
+            this.Text += Input.GetKey("shift") ? input.toUpperCase() : input
+        }
+
+        if (input == "enter") {
+            return this.OnSubmit()
         }
 
         if (input == "backspace") {
@@ -66,6 +78,8 @@ class TextInput extends Clickable
             } else {                  
                 this.Text = this.Text.substr(0, this.Text.length - 1)
             }
+
+            return
         }
     }
 
@@ -81,6 +95,10 @@ class TextInput extends Clickable
         let textValue = this.Text == "" && !this.Active ? this.Style.Placeholder : this.Text
         let textColor = this.Text == "" ? this.Style.PlaceholderColor : this.Style.TextColor
 
+        if (this.IsPassword && this.Text.length > 0) {
+            textValue = "*".repeat(textValue.length)
+        }
+
         if (this.Active) {
             textValue += "|"
         }
@@ -91,6 +109,10 @@ class TextInput extends Clickable
             let borderStart = this.BBoxStart
             canvas.DrawRect(borderStart, new Vector2(this.Style.Width, this.Style.Height), {color: this.Style.BorderColor, fill: false})
         }
+    }
+
+    OnSubmit() {
+        
     }
 }
 
