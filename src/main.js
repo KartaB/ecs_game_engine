@@ -18,9 +18,34 @@ export function Main()
 {
     canvas = Canvas.GetByName("debug")
     range = new RangeInputHorizontal(canvas.GetSize().Div(2))
+
+    range.Min = -100
+    range.Max = 100
+    range.RoundValue = true
+
+    let btnSub = new Button(canvas.GetSize().Div(2).Sub(new Vector2(range.Style.Width/2 + 25, 0)), "-")
+    btnSub.Style.Cursor = "pointer"
+    btnSub.SetWidth(20)
+    btnSub.SetHeight(20)
+
+    btnSub.OnMouseClick = () => {
+        range.Value--
+    }
+    
+    let btnAdd = new Button(canvas.GetSize().Div(2).Add(new Vector2(range.Style.Width/2 + 25, 0)), "+")
+    btnAdd.Style.Cursor = "pointer"
+    btnAdd.Style.Background = true
+    btnAdd.Style.BackgroundColor = "lightgray"
+    btnAdd.SetWidth(20)
+    btnAdd.SetHeight(20)
+
+    btnAdd.OnMouseClick = () => {
+        range.Value++
+    }
 }
 
 export function Update(deltaTime)
 {
-    Canvas.GetByName("debug").DrawText(range.Value, range.Position.Sub(new Vector2(0, 50)), {align: "left"})
+    Canvas.GetByName("debug").DrawText("Current value:", range.Position.Sub(new Vector2(0, 100)), {align: "center"})
+    Canvas.GetByName("debug").DrawText(range.Value, range.Position.Sub(new Vector2(0, 50)), {align: "center"})
 }

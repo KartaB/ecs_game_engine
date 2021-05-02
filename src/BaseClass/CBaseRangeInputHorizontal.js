@@ -11,15 +11,18 @@ class RangeInputHorizontal extends Clickable
         super(_pos)
 
         this.Value = 0
-        this.Min = -25
-        this.Max = 25
+        this.Min = 0
+        this.Max = 10
+
+        this.RoundValue = true
+        this.DecimalPlaces = 2
 
         this.Style = {
             Border: true,
             BorderColor: "gray",
             Background: true,
             BackgroundColor: "lightgray",
-            SliderColor: "black",
+            SliderColor: "darkgray",
             Cursor: "pointer",
             BBox: false,
         }
@@ -65,6 +68,13 @@ class RangeInputHorizontal extends Clickable
     }
 
     DrawRangeSlider() {
+        const sliderPosition = this.CalculateSliderPosition()
+
+        Canvas.GetByName("debug").DrawCircle(sliderPosition, {radius: 10, color: this.Style.SliderColor})
+        Canvas.GetByName("debug").DrawCircle(sliderPosition, {radius: 10, color: "gray", fill: false})
+    }
+
+    CalculateSliderPosition() {
         const valueRange = Math.abs(this.Min - this.Max)
         const valueDistance = -(Math.abs(this.Value - this.Max) - valueRange)
         const valuePercentage = valueDistance/valueRange
@@ -72,8 +82,8 @@ class RangeInputHorizontal extends Clickable
         const rangeStart = this.Position.Sub(new Vector2(this.Style.Width/2, 0))
         const sliderPosition = rangeStart.Add(new Vector2(this.Style.Width * valuePercentage, 0))
         const sliderPositionClamp = Mathf.ClampVector(sliderPosition, rangeStart, rangeStart.Add(new Vector2(this.Style.Width, 0)))
-
-        Canvas.GetByName("debug").DrawCircle(sliderPositionClamp, {radius: 10, color: this.Style.SliderColor})
+        
+        return sliderPositionClamp
     }
 
     VectorToValue(_vec) {
@@ -82,7 +92,10 @@ class RangeInputHorizontal extends Clickable
         const percentage = -(offset/this.Style.Width)
 
         const valueRange = Math.abs(this.Min - this.Max)
-        const newValue = Math.floor(this.Min + (valueRange * percentage))
+        let newValue = (this.Min + (valueRange * percentage)).toFixed(this.DecimalPlaces)
+        if (this.RoundValue) {
+            newValue = Math.round(newValue)
+        }
 
         return newValue
     }
