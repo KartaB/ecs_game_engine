@@ -11,8 +11,8 @@ class RangeInputHorizontal extends Clickable
         super(_pos)
 
         this.Value = 0
-        this.Min = 0
-        this.Max = 10
+        this.Min = -25
+        this.Max = 25
 
         this.Style = {
             Border: true,
@@ -78,10 +78,10 @@ class RangeInputHorizontal extends Clickable
     VectorToValue(_vec) {
         const rangeStart = this.Position.Sub(new Vector2(this.Style.Width/2, 0))
         const offset = rangeStart.x - _vec.x
-        const percentage = -(offset/this.Style.Width).toFixed(1)
+        const percentage = -(offset/this.Style.Width)
 
         const valueRange = Math.abs(this.Min - this.Max)
-        const newValue = this.Min + (valueRange * percentage)
+        const newValue = Math.floor(this.Min + (valueRange * percentage))
 
         return newValue
     }

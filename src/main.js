@@ -22,5 +22,5 @@ export function Main()
 
 export function Update(deltaTime)
 {
-    Canvas.GetByName("debug").DrawText(range.Value, range.Position.Sub(new Vector2(0, 100)))
+    Canvas.GetByName("debug").DrawText(range.Value, range.Position.Sub(new Vector2(0, 50)), {align: "left"})
 }
