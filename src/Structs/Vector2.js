@@ -83,6 +83,10 @@ class Vector2
     {
         return Math.sqrt(this.x * this.x + this.y * this.y)
     }
+
+    ToString() {
+        return `(${this.x}, ${this.y})`
+    }
 }
 
 export default Vector2

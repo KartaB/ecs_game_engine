@@ -3,6 +3,7 @@ import Clickable from "./CBaseClickable.js"
 import Canvas from "../RenderSystem/Canvas.js"
 import Vector2 from "../Structs/Vector2.js"
 import Input from "../Input/InputManager.js"
+import Utils from "../Utility/Utils.js"
 
 class TextInput extends Clickable
 {
@@ -37,19 +38,35 @@ class TextInput extends Clickable
 
     Update() {
         if (this.Active) {
-            const input = Input.GetPressed()
-            
-            if (input.length == 1) {
-                this.Text += Input.GetKey("shift") ? input.toUpperCase() : input             
-            }
-
-            if (input == "backspace") {
-                this.Text = this.Text.substr(0, this.Text.length - 1)
-            }
+            this.HandleInput()
         }
 
         this.Draw()
         this.DrawBBox()
+    }
+
+    HandleInput() {
+        const input = Input.GetPressed()
+
+        if (input === "c" && Input.GetKey("ctrl")) {
+            Utils.CopyStringToClipboard(this.Text)
+            return
+        }
+        
+        if (input.length == 1) {
+            this.Text += Input.GetKey("shift") ? input.toUpperCase() : input             
+        }
+
+        if (input == "backspace") {
+            if (Input.GetKey("ctrl")) {
+                let words = this.Text.split(" ")
+                delete words[words.length - 1]
+
+                this.Text = words.join(" ").trimEnd()
+            } else {                  
+                this.Text = this.Text.substr(0, this.Text.length - 1)
+            }
+        }
     }
 
     Draw() {
@@ -74,14 +91,6 @@ class TextInput extends Clickable
             let borderStart = this.BBoxStart
             canvas.DrawRect(borderStart, new Vector2(this.Style.Width, this.Style.Height), {color: this.Style.BorderColor, fill: false})
         }
-    }
-
-    OnMouseOver() {
-        
-    }
-
-    OnMouseOut() {
-        
     }
 }
 

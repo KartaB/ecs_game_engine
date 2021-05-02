@@ -59,6 +59,17 @@ function IsVectorInBox(_vec, _boxStart, _boxEnd) {
     return false
 }
 
+function CopyStringToClipboard(_str) {
+    let dummy = document.createElement('textarea')
+    dummy.value = _str
+    dummy.setAttribute('readonly', '')
+    dummy.style = {position: 'absolute', left: '-9999px'}
+    document.body.appendChild(dummy)
+    dummy.select()
+    document.execCommand('copy')
+    document.body.removeChild(dummy)
+ }
+
 export default {
     RandomInt,
     RandomFloat,
@@ -68,5 +79,6 @@ export default {
     RandomID,
     
     Distance,
-    IsVectorInBox
+    IsVectorInBox,
+    CopyStringToClipboard,
 }

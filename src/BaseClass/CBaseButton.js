@@ -45,14 +45,6 @@ class Button extends Clickable
             canvas.DrawRect(borderStart, new Vector2(this.Style.Width, this.Style.Height), {color: this.Style.BorderColor, fill: false})
         }
     }
-
-    OnMouseOver() {
-        
-    }
-
-    OnMouseOut() {
-        
-    }
 }
 
 export default Button
