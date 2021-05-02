@@ -44,6 +44,7 @@ class RangeInputHorizontal extends Clickable
 
     HandleInput() {
         this.Value = this.VectorToValue(Input.GetCursorPosition())
+        this.ClampValue()
     }
 
     Draw() {
