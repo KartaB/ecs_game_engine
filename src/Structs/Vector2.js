@@ -68,7 +68,7 @@ class Vector2
         let x = Math.cos(radian)
         let y = Math.sin(radian)
 
-        return new Vector2(x, y)    
+        return new Vector2(x, y)
     }
 
     AimVector(vec2)
@@ -77,6 +77,17 @@ class Vector2
         let aimVector = this.RadToVector(aimAngle)
 
         return aimVector
+    }
+
+    Normalize() {
+        const magnitude = this.Magnitude()
+        let vec = Vector2.Copy(this)
+
+        if (magnitude > 0) {
+            vec.Div(magnitude)
+        }
+
+        return vec
     }
 
     Magnitude()
