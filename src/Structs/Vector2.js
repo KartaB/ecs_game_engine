@@ -81,13 +81,12 @@ class Vector2
 
     Normalize() {
         const magnitude = this.Magnitude()
-        let vec = Vector2.Copy(this)
 
         if (magnitude > 0) {
-            vec.Div(magnitude)
+            return this.Div(magnitude)
         }
 
-        return vec
+        return Vector22.Copy(this)
     }
 
     Magnitude()
