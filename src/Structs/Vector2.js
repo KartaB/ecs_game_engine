@@ -11,6 +11,10 @@ class Vector2
         return new Vector2(_other.x, _other.y)
     }
 
+    static Equal(_vec1, _vec2) {
+        return (_vec1.x === _vec2.x && _vec1.y === _vec2.y)
+    }
+
     Add(_other) {
         let value = Vector2.Copy(this)
 
@@ -94,8 +98,8 @@ class Vector2
         return Math.sqrt(this.x * this.x + this.y * this.y)
     }
 
-    ToString() {
-        return `(${this.x}, ${this.y})`
+    toString() {
+        return `${this.x} ${this.y}`
     }
 }
 
