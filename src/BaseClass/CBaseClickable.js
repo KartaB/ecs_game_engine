@@ -94,14 +94,14 @@ class Clickable
         }
     }
 
-    static FindLowestZIndex(array) {
-        let lowest = array[0].zIndex
+    static FindHighestZIndex(array) {
+        let highest = array[0].zIndex
 
         array.forEach((item) => {
-            lowest = item.zIndex < lowest ? item.zIndex : lowest
+            highest = item.zIndex > highest ? item.zIndex : highest
         })
 
-        return lowest
+        return highest
     }
 }
 

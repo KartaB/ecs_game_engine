@@ -75,7 +75,7 @@ function HandleClickables(mousePos)
     if (foundClickables == 0) return
 
     if (foundClickables.length > 1) {
-        const lowestIndex = Clickable.FindLowestZIndex(foundClickables)
+        const lowestIndex = Clickable.FindHighestZIndex(foundClickables)
 
         foundClickables = foundClickables.filter((item) => item.zIndex == lowestIndex)
     }
