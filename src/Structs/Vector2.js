@@ -90,7 +90,7 @@ class Vector2
             return this.Div(magnitude)
         }
 
-        return Vector22.Copy(this)
+        return Vector2.Copy(this)
     }
 
     Magnitude()
