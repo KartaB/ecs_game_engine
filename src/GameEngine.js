@@ -23,7 +23,8 @@ function GameLoop()
     const mousePos = Input.GetCursorPosition()
 
     UpdateCurTime()
-    Canvas.ForEach(canvas => canvas.Resize())
+
+    Canvas.ForEach(canvas => canvas.Update())
 
     HandleClickables(mousePos)
     

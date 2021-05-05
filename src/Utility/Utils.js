@@ -27,15 +27,6 @@ function RandomVectorInCircle(_start, _radius)
     return new Vector2(_start.x + x, _start.y + y)
 }
 
-function RandomColor()
-{
-    let r = RandomInt(0, 255)
-    let g = RandomInt(0, 255)
-    let b = RandomInt(0, 255)
-
-    return `rgb(${r},${g},${b})`;
-}
-
 function RandomID()
 {
     return (+new Date()).toString(16) + (Math.random() * 100000000 | 0).toString(16)
@@ -75,7 +66,6 @@ export default {
     RandomFloat,
     RandomVector,
     RandomVectorInCircle,
-    RandomColor,
     RandomID,
     
     Distance,

@@ -36,6 +36,15 @@ class Canvas
         return this
     }
 
+    Clear() {
+        const size = this.GetSize()
+        this.CanvasData.Context.clearRect(0, 0, size.x, size.y)
+    }
+
+    Update() {
+        this.Resize()
+    }
+
     GetSize() {
         return new Vector2(this.CanvasData.Node.width, this.CanvasData.Node.height)
     }
@@ -79,12 +88,14 @@ class Canvas
 }
 
 function GetByName(_name) {
+    if (CanvasStack[_name] === null) throw `Trying to reference non-existing canvas '${name}'`
+
     return CanvasStack[_name]
 }
 
 function Create(_name) {
     if (CanvasStack[_name] != null) {
-        console.warn(`Trying to create already existing canvas: ${_name}`)
+        console.warn(`Trying to create already existing canvas '${_name}'`)
         return CanvasStack[_name]
     }
 
