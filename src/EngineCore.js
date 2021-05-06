@@ -1,5 +1,5 @@
 import Canvas from "./RenderSystem/Canvas.js"
-import { Main, Update } from "./main.js"
+import * as EntryPoint from "./main.js"
 
 import { UpdateCurTime, CurTime, DeltaTime } from "./Utility/CurTime.js"
 import { SetRenderedFramesCount, GetRenderedFramesCount } from "./Utility/CurTime.js"
@@ -17,7 +17,7 @@ import Ents from "./BaseClass/CBaseStaticEntity.js"
 
 Canvas.Create("debug").SetZIndex(1000)
 
-function GameLoop()
+function EngineLoop()
 {
     document.body.style.cursor = "auto"
     const mousePos = Input.GetCursorPosition()
@@ -28,7 +28,7 @@ function GameLoop()
 
     HandleClickables(mousePos)
     
-    Update(DeltaTime(), GetFPS())
+    EntryPoint.Update(DeltaTime(), GetFPS())
 
     HandleEntities(DeltaTime())
     HandleParticles(DeltaTime())
@@ -39,7 +39,7 @@ function GameLoop()
     /* FPS thingy */
     CalculateFPS()
 
-    window.requestAnimationFrame(GameLoop)
+    window.requestAnimationFrame(EngineLoop)
 }
 
 /* Run those before executing game loop */
@@ -47,8 +47,8 @@ UpdateCurTime()
 Canvas.ForEach(canvas => canvas.Resize())
 
 /* Execute game loop */
-Main()
-window.requestAnimationFrame(GameLoop)
+EntryPoint.Main()
+window.requestAnimationFrame(EngineLoop)
 
 function HandleClickables(mousePos)
 {

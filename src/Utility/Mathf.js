@@ -16,7 +16,7 @@ function ClampVector(val, min, max)
     return new Vector2(xClamp, yClamp)
 }
 
-function Lerp(val, dest, percentage)
+function Lerp(val, dest, time)
 {
     let difference = (dest - val)
 
@@ -25,10 +25,10 @@ function Lerp(val, dest, percentage)
     return (val + result)
 }
 
-function LerpVector(vec, dest, percentage)
+function LerpVector(vec, dest, time)
 {
-    let xLerp = Lerp(vec.x, dest.x, percentage)
-    let yLerp = Lerp(vec.y, dest.y, percentage)
+    let xLerp = Lerp(vec.x, dest.x, time)
+    let yLerp = Lerp(vec.y, dest.y, time)
 
     return new Vector2(xLerp, yLerp)
 }
