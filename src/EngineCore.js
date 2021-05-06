@@ -1,9 +1,9 @@
 import Canvas from "./RenderSystem/Canvas.js"
 import * as EntryPoint from "./main.js"
 
-import { UpdateCurTime, CurTime, DeltaTime } from "./Utility/CurTime.js"
-import { SetRenderedFramesCount, GetRenderedFramesCount } from "./Utility/CurTime.js"
-import { SetNextFpsCheck, GetNextFpsCheck, SetFpsCount, GetFPS } from "./Utility/CurTime.js"
+import { AddFrame, GetFrameCount } from "./Utility/CurTime.js"
+import { UpdateCurTime, CurTime } from "./Utility/CurTime.js"
+import { DeltaTime } from "./Utility/CurTime.js"
 
 import Input from "./Input/InputManager.js"
 import Events from "./Events/Events.js"
@@ -28,7 +28,7 @@ function EngineLoop()
 
     HandleClickables(mousePos)
     
-    EntryPoint.Update(DeltaTime(), GetFPS())
+    EntryPoint.Update(DeltaTime())
 
     HandleEntities(DeltaTime())
     HandleParticles(DeltaTime())
@@ -36,8 +36,7 @@ function EngineLoop()
     Input.ClearInput()
     Events.ClearEvents()
 
-    /* FPS thingy */
-    CalculateFPS()
+    AddFrame()
 
     window.requestAnimationFrame(EngineLoop)
 }
@@ -116,15 +115,5 @@ function HandleParticles(deltaTime)
     let particleList = Particle.List
     for (let particleID in particleList) {
         particleList[particleID].ParticleTick(deltaTime)
-    }
-}
-
-function CalculateFPS()
-{
-    SetRenderedFramesCount( GetRenderedFramesCount() + 1 )
-    if (CurTime() >= GetNextFpsCheck())
-    {
-        SetFpsCount( GetRenderedFramesCount() )
-        SetNextFpsCheck(CurTime() + 1)
     }
 }

@@ -1,20 +1,21 @@
 let globalStart = new Date().getTime()
 let curTime = 0
 
-export function UpdateCurTime()
+function UpdateCurTime()
 {
     let difference = new Date().getTime() - globalStart
     curTime = difference / 1000
 }
 
-export function CurTime()
+function CurTime()
 {
     return curTime
 }
 
-var lastUpdate = Date.now();
+/* Delta Time */
+let lastUpdate = Date.now();
 
-export function DeltaTime()
+function DeltaTime()
 {
     let now = Date.now();
     let deltaTime = (now - lastUpdate) / 1000;
@@ -23,38 +24,23 @@ export function DeltaTime()
     return deltaTime
 }
 
-/* FPS Counter */
-let nextFpsCheck = CurTime() + 1
-let renderedFramesCount = 0
-let framesPerSecond = 0
+/* Frame Count */
 
-export function SetRenderedFramesCount(value)
-{
-    renderedFramesCount = value
+let frameCount = 0
+
+function AddFrame() {
+    frameCount++
 }
 
-export function GetRenderedFramesCount()
+function GetFrameCount()
 {
-    return renderedFramesCount
+    return frameCount
 }
 
-export function GetNextFpsCheck()
-{
-    return nextFpsCheck
-}
-
-export function SetNextFpsCheck(next)
-{
-    nextFpsCheck = next
-}
-
-export function SetFpsCount(fpsCount)
-{
-    framesPerSecond = fpsCount
-    renderedFramesCount = 0
-}
-
-export function GetFPS()
-{
-    return framesPerSecond
+export {
+    UpdateCurTime,
+    CurTime,
+    DeltaTime,
+    AddFrame,
+    GetFrameCount
 }

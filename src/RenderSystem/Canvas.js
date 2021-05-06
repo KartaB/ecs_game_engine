@@ -79,6 +79,12 @@ class Canvas
         Render.DrawMultiColorText(this.CanvasData.Context, _start, fontSize, fill, textData)
     }
 
+    DrawImage(_img, _start, data = []) {
+        const imgScale = new Vector2(_img.width, _img.height)
+        const { scale = 1, dimensions = Vector2.Copy(imgScale), clipStart = new Vector2(), clipDimensions = Vector2.Copy(imgScale) } = data
+        Render.DrawImage(this.CanvasData.Context, _img, _start, dimensions, scale, clipStart, clipDimensions)
+    }
+
     MeasureText(_text, _fontSize) {
         return {
             width: Render.MeasureText(this.CanvasData.Context, _text, _fontSize),

@@ -47,7 +47,7 @@ function DrawRect(_ctx, _start, _length, _color, _fill)
     }
 }
 
-function DrawText(_ctx, _text, _start, _color = "black", _fontSize = 30, _align = "center", _fill = true)
+function DrawText(_ctx, _text, _start, _color, _fontSize, _align, _fill = true)
 {
     const RenderWindowContext = _ctx
 
@@ -77,6 +77,15 @@ function DrawMultiColorText(_ctx, _start, _fontSize, _fill, _textData)
     }
 }
 
+function DrawImage(_ctx, _img, _start, _dimensions, _scale, _clipStart, _clipDimensions)
+{
+    const RenderWindowContext = _ctx
+
+    const dimensions = _dimensions.Mul(_scale)
+
+    RenderWindowContext.drawImage(_img, _clipStart.x, _clipStart.y, _clipDimensions.x, _clipDimensions.y, _start.x, _start.y, dimensions.x, dimensions.y)
+}
+
 function MeasureText(_ctx, _text, _fontSize)
 {
     const RenderWindowContext = _ctx
@@ -93,6 +102,7 @@ export default {
     DrawRect,
     DrawText,
     DrawMultiColorText,
+    DrawImage,
 
     MeasureText
 }
