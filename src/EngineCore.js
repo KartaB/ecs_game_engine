@@ -26,12 +26,11 @@ function EngineLoop()
 
     Canvas.ForEach(canvas => canvas.Update())
 
-    HandleClickables(mousePos)
-    
-    EntryPoint.Update(DeltaTime())
-
+    HandleClickables(mousePos) 
     HandleEntities(DeltaTime())
     HandleParticles(DeltaTime())
+
+    EntryPoint.Update(DeltaTime())
 
     Input.ClearInput()
     Events.ClearEvents()

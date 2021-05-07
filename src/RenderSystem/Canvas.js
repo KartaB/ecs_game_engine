@@ -1,3 +1,4 @@
+import Input from "../Input/InputManager.js"
 import Vector2 from "../Structs/Vector2.js"
 import Render from "./Render.js"
 
@@ -81,8 +82,34 @@ class Canvas
 
     DrawImage(_img, _start, data = []) {
         const imgScale = new Vector2(_img.width, _img.height)
-        const { scale = 1, dimensions = Vector2.Copy(imgScale), clipStart = new Vector2(), clipDimensions = Vector2.Copy(imgScale) } = data
-        Render.DrawImage(this.CanvasData.Context, _img, _start, dimensions, scale, clipStart, clipDimensions)
+        const { scale = 1, dimensions = Vector2.Copy(imgScale), clipStart = new Vector2(), clipDimensions = Vector2.Copy(imgScale), flip = null } = data
+        
+        let newStart = Vector2.Copy(_start)
+        if (flip != null) {
+            const flipX = flip.includes("x") ? -1 : 1
+            const flipY = flip.includes("y") ? -1 : 1
+
+            this.CanvasData.Context.save()
+            
+            let canvasSize = this.GetSize()
+            if (flipX == -1) {
+                this.CanvasData.Context.translate(canvasSize.x, 0)
+                newStart.x = canvasSize.x - newStart.x - _img.width * scale
+            }
+            
+            if (flipY == -1) {
+                this.CanvasData.Context.translate(0, canvasSize.y)
+                newStart.y = canvasSize.y - newStart.y - _img.height * scale
+            }
+
+            this.CanvasData.Context.scale(flipX, flipY)
+        }
+        
+        Render.DrawImage(this.CanvasData.Context, _img, newStart, dimensions, scale, clipStart, clipDimensions)
+
+        if (flip != null) {
+            this.CanvasData.Context.restore()
+        }
     }
 
     MeasureText(_text, _fontSize) {
