@@ -27,19 +27,11 @@ EventManager.addEngineCallback(window, "resize", event => {
 
 function getCanvas() {
 	if (Viewport.Canvas === null) {
-		const existingCanvas = document.querySelector("canvas")
-		if (existingCanvas === null) {
+		Viewport.Canvas = document.querySelector("canvas")
+
+		if (Viewport.Canvas === null) {
 			Viewport.Canvas = document.createElement("canvas")
-
-			Viewport.Size.x = window.innerWidth
-			Viewport.Size.y = window.innerHeight
-
-			Viewport.Canvas.width = Viewport.Size.x
-			Viewport.Canvas.height = Viewport.Size.y
-
-			Viewport.Canvas.style.position = "absolute"
-			Viewport.Canvas.style.left = 0
-			Viewport.Canvas.style.top = 0	
+			maximize()
 
 			document.body.appendChild(Viewport.Canvas)
 		}
@@ -54,6 +46,20 @@ function getContext() {
 	}
 
 	return Viewport.Context
+}
+
+function maximize() {
+	Viewport.Size.x = window.innerWidth
+	Viewport.Size.y = window.innerHeight
+
+	const canvas = getCanvas()
+
+	canvas.width = Viewport.Size.x
+	canvas.height = Viewport.Size.y
+
+	canvas.style.position = "absolute"
+	canvas.style.left = 0
+	canvas.style.top = 0	
 }
 
 function clear() {
@@ -98,6 +104,7 @@ export default {
 	getCanvas,
 	getContext,
 	
+	maximize,
 	clear,
 	renderQueued,
 
