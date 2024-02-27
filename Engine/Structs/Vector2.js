@@ -15,6 +15,26 @@ class Vector2
         return (_vec1.x === _vec2.x && _vec1.y === _vec2.y)
     }
 
+	static Distance(_vec1, _vec2)
+	{
+		let a = _vec1.x - _vec2.x
+		let b = _vec1.y - _vec2.y
+
+		return a*a + b*b
+	}
+
+	static DistanceSqrt(_vec1, _vec2)
+	{
+		let a = _vec1.x - _vec2.x
+		let b = _vec1.y - _vec2.y
+
+		return Math.sqrt( a*a + b*b )
+	}
+
+	static DistanceManhattan(_vec1, _vec2) {
+		return Math.abs(_vec1.x - _vec2.x) + Math.abs(_vec1.y - _vec2.y)
+	}
+
     Add(_other) {
         let value = Vector2.Copy(this)
 

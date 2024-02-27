@@ -32,14 +32,6 @@ function RandomID()
     return (+new Date()).toString(16) + (Math.random() * 100000000 | 0).toString(16)
 }
 
-function Distance(_point1, _point2)
-{
-    let a = _point1.x - _point2.x;
-    let b = _point1.y - _point2.y;
-
-    return Math.sqrt( a*a + b*b );
-}
-
 function IsVectorInBox(_vec, _boxStart, _boxEnd) {
     if (_vec.x >= _boxStart.x && _vec.x <= _boxEnd.x) {
         if (_vec.y >= _boxStart.y && _vec.y <= _boxEnd.y) {
@@ -50,25 +42,11 @@ function IsVectorInBox(_vec, _boxStart, _boxEnd) {
     return false
 }
 
-function CopyStringToClipboard(_str) {
-    let dummy = document.createElement('textarea')
-    dummy.value = _str
-    dummy.setAttribute('readonly', '')
-    dummy.style = {position: 'absolute', left: '-9999px'}
-    document.body.appendChild(dummy)
-    dummy.select()
-    document.execCommand('copy')
-    document.body.removeChild(dummy)
- }
-
 export default {
     RandomInt,
     RandomFloat,
     RandomVector,
     RandomVectorInCircle,
     RandomID,
-    
-    Distance,
     IsVectorInBox,
-    CopyStringToClipboard,
 }

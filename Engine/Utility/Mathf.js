@@ -18,8 +18,8 @@ function ClampVector(val, min, max)
 
 function Lerp(val, dest, time)
 {
+    let percentage = time / 1000;  
     let difference = (dest - val)
-
     let result = difference * percentage
     
     return (val + result)

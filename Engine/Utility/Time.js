@@ -1,20 +1,15 @@
 let globalStart = new Date().getTime()
 let curTime = 0
 
-function UpdateCurTime()
+function CurTime()
 {
     let difference = new Date().getTime() - globalStart
     curTime = difference / 1000
+
+	return curTime
 }
 
-function CurTime()
-{
-    return curTime
-}
-
-/* Delta Time */
 let lastUpdate = Date.now();
-
 function DeltaTime()
 {
     let now = Date.now();
@@ -24,23 +19,7 @@ function DeltaTime()
     return deltaTime
 }
 
-/* Frame Count */
-
-let frameCount = 0
-
-function AddFrame() {
-    frameCount++
-}
-
-function GetFrameCount()
-{
-    return frameCount
-}
-
 export {
-    UpdateCurTime,
     CurTime,
-    DeltaTime,
-    AddFrame,
-    GetFrameCount
+	DeltaTime
 }
