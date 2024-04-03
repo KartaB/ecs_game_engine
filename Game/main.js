@@ -12,8 +12,8 @@ import ParticleRender from "./Components/ParticleRender.js"
 const particleList = []
 const connections = []
 
-const minDistance = 5
-const maxDistance = 150
+const minDistance = 32
+const maxDistance = 120
 
 let ctx
 let grid
@@ -29,7 +29,7 @@ export function start()
 	SpatialHashGrid.Global = new SpatialHashGrid(cellSize, Math.floor(width / cellSize) + 1, Math.floor(height / cellSize) + 1)
 	grid = SpatialHashGrid.Global
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < Math.min(600, width / 4); i++) {
         const pos = Utils.RandomVector(new Vector2(), Render.getScreenSize())
 
 		const particle = new Entity("particle")
@@ -88,10 +88,7 @@ export function update(deltaTime)
 					if (distance >= minDistance && distance <= maxDistance) {
 						const alpha = (maxDistance - distance) / maxDistance
 
-						const middleColor = Color.hslToRgb(p.getComponent("ParticleRender").color)
-						middleColor.Alpha = alpha
-
-						ctx.strokeStyle = middleColor.toString()
+						ctx.strokeStyle = `${p.getComponent("ParticleRender").colorTemplate}${alpha}`
 						ctx.beginPath()
 						ctx.moveTo(p.transform.position.x, p.transform.position.y)			
 						ctx.lineTo(o.transform.position.x, o.transform.position.y)			

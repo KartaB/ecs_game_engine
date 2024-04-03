@@ -28,7 +28,9 @@ class ParticleRender extends Component
         const percHsv = this.owner.transform.position.x / Render.getScreenSize().x
         const hue = Mathf.Clamp(Math.floor(percHsv * 360), 0, 360)
 
-        return `hsl(${hue}, 100%, 50%)`
+		this.colorTemplate = `hsla(${hue}, 100%, 50%, `
+
+        return `${this.colorTemplate}1)`
     }
 }
 
