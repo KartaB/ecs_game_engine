@@ -4,6 +4,7 @@ import Render from "./../Engine/Render/Render.js"
 import Vector2 from "../Engine/Structs/Vector2.js"
 import Color from "../Engine/Structs/Color.js"
 import Utils from "../Engine/Utility/Utils.js"
+import SpatialHashGrid from "./Systems/SpatialHashGrid.js"
 
 import ParticleMove from "./Components/ParticleMove.js"
 import ParticleRender from "./Components/ParticleRender.js"
@@ -11,13 +12,24 @@ import ParticleRender from "./Components/ParticleRender.js"
 const particleList = []
 const connections = []
 
-const minDistance = 10
+const minDistance = 5
 const maxDistance = 150
+
+let ctx
+let grid
 
 export function start()
 {
+	ctx = Render.getContext()
+
+	const cellSize = 32
 	const width = Render.getScreenSize().x;
-    for (let i = 0; i < Math.min(400, width / 6); i++) {
+	const height = Render.getScreenSize().y;
+
+	SpatialHashGrid.Global = new SpatialHashGrid(cellSize, Math.floor(width / cellSize) + 1, Math.floor(height / cellSize) + 1)
+	grid = SpatialHashGrid.Global
+
+    for (let i = 0; i < 1000; i++) {
         const pos = Utils.RandomVector(new Vector2(), Render.getScreenSize())
 
 		const particle = new Entity("particle")
@@ -38,44 +50,85 @@ export function start()
 
 			const hash = `${min}_${max}`
 			if (connections[hash] === undefined) {
-				connections[hash] = { p1: particle, p2: other }
+				connections[hash] = { p1: particle, p2: other, frame: -1}
 			}
 		}
 	}
+
+	grid.build(particleList)
 }
 
-let frames = 0
+let frame = 0
 export function update(deltaTime)
 {
-	for (const index in connections) {
-		const { p1, p2, dist } = connections[index]
+	//debug()
+	
+	for (const p of particleList)
+	{
+		const cell = grid.getCell(p.transform.position.x, p.transform.position.y)
+		if (cell)
+		{
+			const neighbourCells = grid.getCellsInRadius(cell.x, cell.y, 3)
+			for (const c of neighbourCells)
+			{
+				if (c == cell) continue // skip current cell
 
-		let distance
-		if (frames % 2 == 0) {
-			distance = Vector2.DistanceManhattan(p1.transform.position, p2.transform.position)
-			connections[index].dist = distance
-		} else {
-			distance = dist
-		}
+				for (const o of c.objects)
+				{
+					const min = Math.min(p.getIndex(), o.getIndex())
+					const max = Math.max(p.getIndex(), o.getIndex())
+					const hash = `${min}_${max}`
+					const conn = connections[hash]
+
+					if (conn.frame >= frame) continue
+					conn.frame = frame
+
+					const distance = Vector2.DistanceManhattan(p.transform.position, o.transform.position)
 		
-		if (distance >= minDistance && distance <= maxDistance) {
-			const alpha = (maxDistance - distance) / maxDistance
+					if (distance >= minDistance && distance <= maxDistance) {
+						const alpha = (maxDistance - distance) / maxDistance
 
-			const color1 = Color.hslToRgb(p1.getComponent("ParticleRender").color)
-			const color2 = Color.hslToRgb(p2.getComponent("ParticleRender").color)
-			
-			const middleColor = getMiddleColor(color1, color2)
-			middleColor.Alpha = alpha
+						const middleColor = Color.hslToRgb(p.getComponent("ParticleRender").color)
+						middleColor.Alpha = alpha
 
-			Render.drawLine({
-				position: p1.transform.position,
-				points: [ p2.transform.position ],
-				style: middleColor.toString()
-			})
+						ctx.strokeStyle = middleColor.toString()
+						ctx.beginPath()
+						ctx.moveTo(p.transform.position.x, p.transform.position.y)			
+						ctx.lineTo(o.transform.position.x, o.transform.position.y)			
+						ctx.closePath()
+						ctx.stroke()
+					}
+				}
+			}	
 		}
 	}
 
-	frames++
+	frame++
+}
+
+function debug()
+{
+	grid.draw()
+
+	const currentCell = grid.getCell(particleList[0].transform.position.x, particleList[0].transform.position.y)
+	if (currentCell) {
+		const cells = grid.getCellsInRadius(currentCell.x, currentCell.y, 3)
+		
+		for (const c of cells) {	
+			if (c == currentCell) continue
+			Render.drawRect({
+				position: new Vector2(grid.cellSize * c.x, grid.cellSize * c.y),
+				length: new Vector2(grid.cellSize, grid.cellSize),
+				style: "rgba(255, 0, 0, 1)",
+			})
+		}
+
+		Render.drawRect({
+			position: new Vector2(grid.cellSize * currentCell.x, grid.cellSize * currentCell.y),
+			length: new Vector2(grid.cellSize, grid.cellSize),
+			style: "rgba(255, 255, 255, 1)",
+		})
+	}
 }
 
 function getMiddleColor(color1, color2) {

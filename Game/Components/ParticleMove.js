@@ -2,6 +2,8 @@ import Component from "../../Engine/System/Component.js"
 import Vector2 from "../../Engine/Structs/Vector2.js"
 import Input from "../../Engine/Input/InputManager.js"
 
+import SpatialHashGrid from "../Systems/SpatialHashGrid.js"
+
 class ParticleMove extends Component
 {
 	start() {
@@ -26,6 +28,8 @@ class ParticleMove extends Component
 			const offset = angleVec.Mul(distancePercent).Mul(drag).Mul(speed)
 
 			transform.position = transform.position.Add(offset)
+
+			SpatialHashGrid.Global.update(this.owner)
 		}
 		else {
 			const defaultPos = moveComponent.defaultPos
@@ -42,6 +46,8 @@ class ParticleMove extends Component
 					transform.position.x = defaultPos.x
 					transform.position.y = defaultPos.y
 				}
+
+				SpatialHashGrid.Global.update(this.owner)
 			}
 		}
 	}
