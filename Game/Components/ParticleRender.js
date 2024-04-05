@@ -6,9 +6,6 @@ class ParticleRender extends Component
 {
     start()
     { 
-		this.radius = 3
-        this.maxLineDist = 150
-
         this.color = this.getColor()
     }
 
@@ -18,7 +15,7 @@ class ParticleRender extends Component
 		
 		Render.drawCircle({
 			position: this.owner.transform.position,
-			radius: this.radius,
+			radius: 3,
 			style: this.color,
 			fill: true
 		})
